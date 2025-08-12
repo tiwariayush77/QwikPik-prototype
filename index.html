@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShopSocial - AI-Powered Social Shopping Assistant</title>
+    <title>QwikPik - AI-Powered Social Shopping Assistant</title>
     <style>
         /* Enhanced Design System with Social Features */
         :root {
@@ -18,7 +18,7 @@
             --color-border: #dadce0;
             --shadow: 0 2px 8px rgba(0,0,0,0.1);
             --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
-            --radius: 8px;
+            --radius: 12px;
             --space: 16px;
         }
 
@@ -39,7 +39,7 @@
             min-height: 100vh;
         }
 
-        /* Enhanced Navigation */
+        /* Navigation */
         .main-nav {
             background: var(--color-surface);
             border-bottom: 1px solid var(--color-border);
@@ -60,7 +60,7 @@
         }
 
         .brand-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--color-primary);
         }
@@ -110,7 +110,7 @@
             padding: 0 var(--space);
         }
 
-        /* Home Screen with Social Features */
+        /* Hero Section */
         .hero-section {
             background: linear-gradient(135deg, var(--color-primary), var(--color-success));
             color: white;
@@ -139,7 +139,7 @@
             opacity: 0.8;
         }
 
-        /* Enhanced Search Section */
+        /* Search Section */
         .search-section {
             background: var(--color-surface);
             padding: 24px;
@@ -169,7 +169,7 @@
             border-color: var(--color-primary);
             box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
         }
-
+        
         .voice-btn {
             width: 48px;
             height: 48px;
@@ -212,7 +212,6 @@
             50% { transform: scale(1.1); }
         }
 
-        /* Quick Search Suggestions */
         .quick-suggestions {
             display: flex;
             gap: 8px;
@@ -236,7 +235,7 @@
             border-color: var(--color-primary);
         }
 
-        /* Enhanced Search Results Section */
+        /* [ENHANCED] Search Results Layout */
         .search-results-container {
             background: var(--color-surface);
             border-radius: var(--radius);
@@ -281,111 +280,212 @@
             align-items: center;
         }
 
-        /* Enhanced Filters */
+        /* [ENHANCED] Prominent Filters Section */
         .filters-section {
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--color-border);
-            background: #fafbfc;
+            background: linear-gradient(135deg, #f8f9ff, #fff3e0);
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius);
+            margin: 20px 24px;
+            position: relative;
+            overflow: hidden;
         }
-
+        
         .filters-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            padding: 16px 24px;
+            background: rgba(66, 133, 244, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .filters-header:hover {
+            background: rgba(66, 133, 244, 0.15);
+        }
+        
+        .filters-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .filters-title {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--color-text);
+        .filters-title::before {
+            content: '🔧';
+            font-size: 18px;
+        }
+        
+        .filters-header .filters-title::after {
+            content: ' ▼';
+            font-size: 12px;
+            margin-left: 8px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .filters-section.expanded .filters-header .filters-title::after {
+            transform: rotate(180deg);
+        }
+        
+        .filters-content {
+            padding: 0 24px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .filters-section.expanded .filters-content {
+            padding: 20px 24px;
+            max-height: 500px;
+            opacity: 1;
         }
 
         .clear-filters {
-            background: none;
+            background: var(--color-error);
+            color: white;
             border: none;
-            color: var(--color-primary);
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 12px;
             cursor: pointer;
-            text-decoration: underline;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .clear-filters:hover {
+            background: #c5221f;
+            transform: translateY(-1px);
         }
 
         .filters-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            gap: 20px;
         }
 
         .filter-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         .filter-group-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--color-text-secondary);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-primary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .filter-options {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .filter-chip {
             background: white;
-            border: 1px solid var(--color-border);
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
+            border: 2px solid var(--color-border);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .filter-chip:hover {
             border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
         }
 
         .filter-chip.active {
             background: var(--color-primary);
             color: white;
             border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
         }
 
         .sort-dropdown {
-            padding: 8px 12px;
-            border: 1px solid var(--color-border);
+            padding: 10px 16px;
+            border: 2px solid var(--color-border);
             border-radius: var(--radius);
             background: white;
             font-size: 14px;
             cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        /* Products Grid */
+        .sort-dropdown:hover {
+            border-color: var(--color-primary);
+        }
+
+        /* [ENHANCED] Products Grid & Cards */
         .products-grid {
             padding: 24px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
         }
 
         .product-card {
             background: var(--color-surface);
-            border: 1px solid var(--color-border);
+            border: 2px solid var(--color-border);
             border-radius: var(--radius);
-            padding: 20px;
+            overflow: hidden;
             transition: all 0.3s ease;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
 
         .product-card:hover {
             box-shadow: var(--shadow-lg);
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: var(--color-primary);
+        }
+
+        .product-image-placeholder {
+            height: 180px;
+            background: linear-gradient(135deg, var(--color-bg), #e8f0fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            position: relative;
+        }
+
+        .confidence-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--color-success);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(52, 168, 83, 0.3);
+        }
+
+        .product-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .product-header {
@@ -398,107 +498,138 @@
         .product-brand {
             background: var(--color-primary);
             color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 16px;
             font-size: 12px;
-            font-weight: 600;
-        }
-
-        .confidence-score {
-            background: var(--color-success);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .product-name {
-            font-weight: 600;
-            margin-bottom: 8px;
-            line-height: 1.4;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            color: var(--color-text);
         }
 
         .product-price {
             color: var(--color-success);
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .original-price {
             color: var(--color-text-secondary);
             text-decoration: line-through;
-            font-size: 14px;
-            margin-left: 8px;
+            font-size: 16px;
+            font-weight: 500;
         }
 
         .discount-badge {
             background: var(--color-error);
             color: white;
-            padding: 2px 6px;
-            border-radius: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 11px;
-            margin-left: 8px;
+            font-weight: 700;
         }
 
         .vibe-tags {
             display: flex;
-            gap: 6px;
-            margin-bottom: 12px;
+            gap: 8px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
 
         .vibe-tag {
             background: var(--color-bg);
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 11px;
+            border: 1px solid var(--color-border);
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
             color: var(--color-text-secondary);
         }
 
         .vibe-tag.highlight {
             background: var(--color-warning);
             color: var(--color-text);
+            border-color: var(--color-warning);
+            font-weight: 700;
         }
 
-        .product-description {
-            color: var(--color-text-secondary);
-            font-size: 14px;
-            line-height: 1.4;
+        /* [ENHANCED] Product Action Buttons */
+        .product-actions {
+            margin-top: auto;
+            border-top: 2px solid var(--color-border);
+            padding-top: 16px;
+        }
+
+        .primary-action {
             margin-bottom: 12px;
         }
 
-        .social-actions {
+        .primary-btn {
+            width: 100%;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: var(--radius);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 8px;
-            margin-top: 16px;
         }
 
-        .social-btn {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--color-border);
+        .primary-btn:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(66, 133, 244, 0.3);
+        }
+
+        .secondary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .secondary-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 16px;
+            border: 2px solid var(--color-border);
             border-radius: var(--radius);
             background: var(--color-surface);
             cursor: pointer;
-            font-size: 12px;
-            transition: all 0.2s;
-            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: var(--color-text);
         }
 
-        .social-btn:hover {
-            background: var(--color-bg);
-        }
-
-        .social-btn.primary {
+        .secondary-btn:hover {
             background: var(--color-primary);
             color: white;
             border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
         }
 
-        .social-btn.primary:hover {
-            background: #3367d6;
+        .btn-icon {
+            font-size: 16px;
         }
 
         /* Loading State */
@@ -567,7 +698,6 @@
             color: var(--color-text-secondary);
         }
 
-        /* Social Section */
         .social-section {
             background: var(--color-surface);
             border-radius: var(--radius);
@@ -604,7 +734,6 @@
             animation: pulse 2s infinite;
         }
 
-        /* Platform Tabs */
         .platform-tabs {
             display: flex;
             gap: 8px;
@@ -632,7 +761,6 @@
             background: var(--color-bg);
         }
 
-        /* Trending Products Grid */
         .trending-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -692,7 +820,6 @@
             font-weight: 500;
         }
 
-        /* Enhanced Feature Screens */
         .feature-screen {
             background: var(--color-surface);
             border-radius: var(--radius);
@@ -711,13 +838,11 @@
             font-weight: 700;
             margin-bottom: 12px;
         }
-
         .feature-subtitle {
             color: var(--color-text-secondary);
             font-size: 1.1rem;
         }
 
-        /* Social Search Features */
         .search-platforms {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -764,7 +889,6 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* Poll Features */
         .poll-types {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -805,7 +929,6 @@
             line-height: 1.4;
         }
 
-        /* Group Features */
         .group-categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -815,16 +938,36 @@
 
         .group-card {
             background: var(--color-bg);
-            border: 1px solid var(--color-border);
+            border: 2px solid var(--color-border);
             border-radius: var(--radius);
             padding: 24px;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
         }
 
         .group-card:hover {
             box-shadow: var(--shadow);
             transform: translateY(-2px);
+            border-color: var(--color-primary);
+        }
+        
+        .group-card.joined {
+            border-color: var(--color-success);
+            background-color: #f0fff4;
+        }
+        
+        .group-card.joined::after {
+            content: '✓ Joined';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--color-success);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
         }
 
         .group-header {
@@ -867,7 +1010,6 @@
             font-size: 12px;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -880,7 +1022,6 @@
             opacity: 0.5;
         }
 
-        /* Status Messages */
         .status-message {
             position: fixed;
             top: 20px;
@@ -891,18 +1032,18 @@
             font-weight: 500;
             z-index: 1000;
             animation: slideIn 0.3s ease;
+            background: var(--color-primary);
         }
-
-        .status-success { background: var(--color-success); }
-        .status-error { background: var(--color-error); }
-        .status-info { background: var(--color-primary); }
+        
+        .status-message.status-success { background: var(--color-success); }
+        .status-message.status-error { background: var(--color-error); }
+        .status-message.status-info { background: var(--color-primary); }
 
         @keyframes slideIn {
             from { transform: translateX(400px); }
             to { transform: translateX(0); }
         }
 
-        /* Back Button */
         .back-btn {
             display: flex;
             align-items: center;
@@ -948,6 +1089,10 @@
             .filters-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .secondary-actions {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -956,7 +1101,7 @@
         <!-- Enhanced Navigation -->
         <nav class="main-nav">
             <div class="nav-container">
-                <h1 class="brand-title">ShopSocial</h1>
+                <h1 class="brand-title">QwikPik</h1>
                 <div class="nav-actions">
                     <button class="nav-btn active" id="homeBtn">
                         <span>🏠</span> Home
@@ -1016,7 +1161,7 @@
                     <div class="spinner"></div>
                     <p>Searching products...</p>
                 </div>
-
+                
                 <!-- Enhanced Search Results -->
                 <div class="search-results-container" id="searchResults">
                     <div class="results-header">
@@ -1035,46 +1180,48 @@
                         </div>
                     </div>
 
-                    <!-- Enhanced Filters Section -->
+                    <!-- [ENHANCED] Prominent Filters Section -->
                     <div class="filters-section" id="filtersSection">
                         <div class="filters-header">
-                            <span class="filters-title">Refine Results</span>
-                            <button class="clear-filters" onclick="clearAllFilters()">Clear All</button>
+                            <span class="filters-title">Smart Filters</span>
+                            <button class="clear-filters" onclick="clearAllFilters(event)">Clear All</button>
                         </div>
-                        <div class="filters-grid">
-                            <div class="filter-group">
-                                <div class="filter-group-title">Price Range</div>
-                                <div class="filter-options">
-                                    <div class="filter-chip" data-filter="price" data-value="0-500">Under ₹500</div>
-                                    <div class="filter-chip" data-filter="price" data-value="500-1000">₹500-1000</div>
-                                    <div class="filter-chip" data-filter="price" data-value="1000-2000">₹1000-2000</div>
-                                    <div class="filter-chip" data-filter="price" data-value="2000+">Above ₹2000</div>
+                        <div class="filters-content">
+                            <div class="filters-grid">
+                                <div class="filter-group">
+                                    <div class="filter-group-title">💰 Price Range</div>
+                                    <div class="filter-options">
+                                        <div class="filter-chip" data-filter="price" data-value="0-500">Under ₹500</div>
+                                        <div class="filter-chip" data-filter="price" data-value="500-1000">₹500-1000</div>
+                                        <div class="filter-chip" data-filter="price" data-value="1000-2000">₹1000-2000</div>
+                                        <div class="filter-chip" data-filter="price" data-value="2000+">Above ₹2000</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="filter-group">
-                                <div class="filter-group-title">Category</div>
-                                <div class="filter-options">
-                                    <div class="filter-chip" data-filter="category" data-value="beauty">Beauty</div>
-                                    <div class="filter-chip" data-filter="category" data-value="electronics">Electronics</div>
-                                    <div class="filter-chip" data-filter="category" data-value="home">Home</div>
-                                    <div class="filter-chip" data-filter="category" data-value="books">Books</div>
+                                <div class="filter-group">
+                                    <div class="filter-group-title">📂 Category</div>
+                                    <div class="filter-options">
+                                        <div class="filter-chip" data-filter="category" data-value="beauty">Beauty</div>
+                                        <div class="filter-chip" data-filter="category" data-value="electronics">Electronics</div>
+                                        <div class="filter-chip" data-filter="category" data-value="home">Home</div>
+                                        <div class="filter-chip" data-filter="category" data-value="books">Books</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="filter-group">
-                                <div class="filter-group-title">Confidence</div>
-                                <div class="filter-options">
-                                    <div class="filter-chip" data-filter="confidence" data-value="90+">90%+ Match</div>
-                                    <div class="filter-chip" data-filter="confidence" data-value="80+">80%+ Match</div>
-                                    <div class="filter-chip" data-filter="confidence" data-value="70+">70%+ Match</div>
+                                <div class="filter-group">
+                                    <div class="filter-group-title">🎯 Match Confidence</div>
+                                    <div class="filter-options">
+                                        <div class="filter-chip" data-filter="confidence" data-value="90+">90%+ Match</div>
+                                        <div class="filter-chip" data-filter="confidence" data-value="80+">80%+ Match</div>
+                                        <div class="filter-chip" data-filter="confidence" data-value="70+">70%+ Match</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="filter-group">
-                                <div class="filter-group-title">Skin Type</div>
-                                <div class="filter-options">
-                                    <div class="filter-chip" data-filter="skintype" data-value="oily">Oily Skin</div>
-                                    <div class="filter-chip" data-filter="skintype" data-value="dry">Dry Skin</div>
-                                    <div class="filter-chip" data-filter="skintype" data-value="sensitive">Sensitive Skin</div>
-                                    <div class="filter-chip" data-filter="skintype" data-value="all">All Skin Types</div>
+                                <div class="filter-group">
+                                    <div class="filter-group-title">✨ Skin Type</div>
+                                    <div class="filter-options">
+                                        <div class="filter-chip" data-filter="skintype" data-value="oily">Oily Skin</div>
+                                        <div class="filter-chip" data-filter="skintype" data-value="dry">Dry Skin</div>
+                                        <div class="filter-chip" data-filter="skintype" data-value="sensitive">Sensitive Skin</div>
+                                        <div class="filter-chip" data-filter="skintype" data-value="all">All Skin Types</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1085,7 +1232,7 @@
                     </div>
                 </div>
 
-                <!-- Enhanced Quick Actions with Working Features -->
+                <!-- Quick Actions -->
                 <div class="quick-actions">
                     <div class="quick-action" onclick="startSocialSearch()">
                         <div class="action-emoji">🔍</div>
@@ -1135,7 +1282,7 @@
                     </div>
                 </div>
 
-                <!-- Empty State (Hidden by default) -->
+                <!-- Empty State -->
                 <div class="empty-state" id="emptyState" style="display: none;">
                     <div class="empty-icon">🛍️</div>
                     <h3>Discover Amazing Products!</h3>
@@ -1209,7 +1356,6 @@
                 <button class="back-btn" onclick="showScreen('homeScreen')">
                     <span>←</span> Back to Home
                 </button>
-
                 <div class="feature-screen">
                     <div class="feature-header">
                         <h2 class="feature-title">📈 Trending Now</h2>
@@ -1224,7 +1370,7 @@
                         <button class="platform-tab" data-trend-platform="twitter">🐦 X/Twitter</button>
                     </div>
 
-                    <div class="trending-grid" id="trendsGrid">
+                    <div class="trending-grid" id="trendsGridPage">
                         <!-- Trending content will be populated here -->
                     </div>
                 </div>
@@ -1306,7 +1452,7 @@
                     </div>
 
                     <div class="group-categories">
-                        <div class="group-card" onclick="joinGroup('beauty-enthusiasts')">
+                        <div class="group-card" data-group-id="beauty-enthusiasts" onclick="joinGroup('beauty-enthusiasts', event)">
                             <div class="group-header">
                                 <div class="group-icon">💄</div>
                                 <div class="group-info">
@@ -1321,12 +1467,11 @@
                                 <span class="group-tag">Reviews</span>
                             </div>
                         </div>
-
-                        <div class="group-card" onclick="joinGroup('tech-deals')">
+                        <div class="group-card" data-group-id="tech-deals" onclick="joinGroup('tech-deals', event)">
                             <div class="group-header">
                                 <div class="group-icon">📱</div>
                                 <div class="group-info">
-                                    <h3>Tech Deals & Reviews</h3>
+                                    <h3>Tech Deals &amp; Reviews</h3>
                                     <p class="group-members">8.7K members</p>
                                 </div>
                             </div>
@@ -1338,11 +1483,11 @@
                             </div>
                         </div>
 
-                        <div class="group-card" onclick="joinGroup('home-decor')">
+                        <div class="group-card" data-group-id="home-decor" onclick="joinGroup('home-decor', event)">
                             <div class="group-header">
                                 <div class="group-icon">🏠</div>
                                 <div class="group-info">
-                                    <h3>Home & Decor Lovers</h3>
+                                    <h3>Home &amp; Decor Lovers</h3>
                                     <p class="group-members">6.3K members</p>
                                 </div>
                             </div>
@@ -1354,7 +1499,7 @@
                             </div>
                         </div>
 
-                        <div class="group-card" onclick="joinGroup('fashion-finds')">
+                        <div class="group-card" data-group-id="fashion-finds" onclick="joinGroup('fashion-finds', event)">
                             <div class="group-header">
                                 <div class="group-icon">👗</div>
                                 <div class="group-info">
@@ -1370,11 +1515,11 @@
                             </div>
                         </div>
 
-                        <div class="group-card" onclick="joinGroup('fitness-gear')">
+                        <div class="group-card" data-group-id="fitness-gear" onclick="joinGroup('fitness-gear', event)">
                             <div class="group-header">
                                 <div class="group-icon">🏃‍♀️</div>
                                 <div class="group-info">
-                                    <h3>Fitness & Wellness</h3>
+                                    <h3>Fitness &amp; Wellness</h3>
                                     <p class="group-members">9.8K members</p>
                                 </div>
                             </div>
@@ -1386,11 +1531,11 @@
                             </div>
                         </div>
 
-                        <div class="group-card" onclick="joinGroup('book-lovers')">
+                        <div class="group-card" data-group-id="book-lovers" onclick="joinGroup('book-lovers', event)">
                             <div class="group-header">
                                 <div class="group-icon">📚</div>
                                 <div class="group-info">
-                                    <h3>Book Lovers & Learners</h3>
+                                    <h3>Book Lovers &amp; Learners</h3>
                                     <p class="group-members">4.1K members</p>
                                 </div>
                             </div>
@@ -1402,7 +1547,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="social-section">
                         <h3>Group Shopping Features</h3>
                         <div class="quick-actions" style="margin-top: 20px;">
@@ -1437,89 +1581,89 @@
             { id: 1, name: "CeraVe Hydrating Cleanser for Dry Skin", brand: "CeraVe", category: "beauty", price: 1299, originalPrice: 1699, confidence: 94, 
               keywords: ["facewash", "face wash", "cleanser", "dry skin", "hydrating", "cerave"], 
               skinType: "dry", vibe: "Dermat Recommended", 
-              description: "Gentle, non-foaming cleanser with ceramides and hyaluronic acid for dry to very dry skin" },
+              description: "Gentle, non-foaming cleanser with ceramides and hyaluronic acid for dry to very dry skin", image: '🧴' },
             
             { id: 2, name: "Neutrogena Oil-Free Face Wash for Oily Skin", brand: "Neutrogena", category: "beauty", price: 699, originalPrice: 999, confidence: 91, 
               keywords: ["facewash", "face wash", "oil-free", "oily skin", "neutrogena", "cleanser"], 
               skinType: "oily", vibe: "Oil Control", 
-              description: "Deep-cleaning face wash that removes excess oil without over-drying" },
+              description: "Deep-cleaning face wash that removes excess oil without over-drying", image: '🧴' },
             
             { id: 3, name: "Himalaya Purifying Neem Face Wash", brand: "Himalaya", category: "beauty", price: 195, originalPrice: 250, confidence: 88, 
               keywords: ["facewash", "face wash", "neem", "natural", "acne", "himalaya", "purifying"], 
               skinType: "oily", vibe: "Natural", 
-              description: "Herbal face wash with neem and turmeric for acne-prone skin" },
+              description: "Herbal face wash with neem and turmeric for acne-prone skin", image: '🌿' },
             
             { id: 4, name: "Plum Green Tea Pore Cleansing Face Wash", brand: "Plum", category: "beauty", price: 349, originalPrice: 450, confidence: 89, 
               keywords: ["facewash", "face wash", "green tea", "pore cleansing", "plum"], 
               skinType: "oily", vibe: "Pore Cleansing", 
-              description: "Gentle gel cleanser with green tea extract for deep pore cleansing" },
+              description: "Gentle gel cleanser with green tea extract for deep pore cleansing", image: '🌿' },
             
             { id: 5, name: "Mamaearth Tea Tree Face Wash", brand: "Mamaearth", category: "beauty", price: 249, originalPrice: 399, confidence: 87, 
               keywords: ["facewash", "face wash", "tea tree", "acne", "natural", "mamaearth"], 
               skinType: "oily", vibe: "Acne Care", 
-              description: "Natural face wash with tea tree oil for acne-prone and oily skin" },
+              description: "Natural face wash with tea tree oil for acne-prone and oily skin", image: '🌿' },
 
             // Beauty - Moisturizers
             { id: 6, name: "Olay Regenerist Micro-Sculpting Cream", brand: "Olay", category: "beauty", price: 2999, originalPrice: 3999, confidence: 93, 
               keywords: ["moisturizer", "moisturiser", "anti-aging", "olay", "cream"], 
               skinType: "all", vibe: "Anti-Aging", 
-              description: "Advanced anti-aging moisturizer with amino-peptides and niacinamide" },
+              description: "Advanced anti-aging moisturizer with amino-peptides and niacinamide", image: '🧴' },
             
             { id: 7, name: "Neutrogena Hydra Boost Water Gel", brand: "Neutrogena", category: "beauty", price: 1299, originalPrice: 1699, confidence: 90, 
               keywords: ["moisturizer", "moisturiser", "gel", "hydrating", "neutrogena", "water gel"], 
               skinType: "oily", vibe: "Lightweight", 
-              description: "Oil-free gel moisturizer with hyaluronic acid for oily skin" },
-
+              description: "Oil-free gel moisturizer with hyaluronic acid for oily skin", image: '💧' },
+            
             // Beauty - Serums
             { id: 8, name: "The Ordinary Niacinamide 10% + Zinc 1%", brand: "The Ordinary", category: "beauty", price: 899, originalPrice: 1299, confidence: 96, 
               keywords: ["serum", "niacinamide", "ordinary", "acne", "oily skin"], 
               skinType: "oily", vibe: "Blemish Control", 
-              description: "High-strength niacinamide serum to reduce appearance of blemishes" },
+              description: "High-strength niacinamide serum to reduce appearance of blemishes", image: '💧' },
             
             { id: 9, name: "Minimalist Vitamin C 10% Face Serum", brand: "Minimalist", category: "beauty", price: 599, originalPrice: 999, confidence: 92, 
               keywords: ["serum", "vitamin c", "minimalist", "brightening", "antioxidant"], 
               skinType: "all", vibe: "Brightening", 
-              description: "Stable vitamin C serum for brightening and protecting skin" },
+              description: "Stable vitamin C serum for brightening and protecting skin", image: '✨' },
 
             // Electronics - Headphones & Audio
             { id: 10, name: "boAt Rockerz 450 Bluetooth Headphones", brand: "boAt", category: "electronics", price: 1299, originalPrice: 2990, confidence: 95, 
               keywords: ["headphones", "bluetooth", "wireless", "music", "bass", "boat"], 
               vibe: "Bass Heavy", 
-              description: "Wireless Bluetooth headphones with Extra Bass and 15-hour playback" },
+              description: "Wireless Bluetooth headphones with Extra Bass and 15-hour playback", image: '🎧' },
             
             { id: 11, name: "Sony WH-CH720N Noise Canceling Headphones", brand: "Sony", category: "electronics", price: 8999, originalPrice: 12999, confidence: 92, 
               keywords: ["headphones", "noise cancelling", "sony", "wireless", "bluetooth"], 
               vibe: "Premium", 
-              description: "Over-ear headphones with active noise canceling and 35-hour battery" },
+              description: "Over-ear headphones with active noise canceling and 35-hour battery", image: '🎧' },
             
             { id: 12, name: "JBL Tune 770NC Wireless Headphones", brand: "JBL", category: "electronics", price: 7999, originalPrice: 9999, confidence: 89, 
               keywords: ["headphones", "jbl", "wireless", "noise cancelling"], 
               vibe: "Balanced", 
-              description: "Wireless over-ear headphones with adaptive noise cancelling" },
+              description: "Wireless over-ear headphones with adaptive noise cancelling", image: '🎧' },
 
             // Home & Kitchen
             { id: 13, name: "Milton Thermosteel Water Bottle 1000ml", brand: "Milton", category: "home", price: 899, originalPrice: 1299, confidence: 91, 
               keywords: ["water bottle", "milton", "steel", "insulated", "thermos"], 
               vibe: "Durable", 
-              description: "Vacuum insulated stainless steel water bottle keeps drinks hot/cold for 24 hours" },
+              description: "Vacuum insulated stainless steel water bottle keeps drinks hot/cold for 24 hours", image: '💧' },
             
             { id: 14, name: "Prestige Svachh Mini Pressure Cooker 2L", brand: "Prestige", category: "home", price: 1299, originalPrice: 1899, confidence: 88, 
               keywords: ["pressure cooker", "prestige", "kitchen", "cooking", "mini"], 
               vibe: "Essential", 
-              description: "Compact pressure cooker perfect for small families with safety features" },
+              description: "Compact pressure cooker perfect for small families with safety features", image: '🍳' },
 
             // Books
             { id: 15, name: "Atomic Habits by James Clear", brand: "Random House", category: "books", price: 399, originalPrice: 699, confidence: 98, 
               keywords: ["book", "habits", "self-help", "productivity", "james clear", "atomic habits"], 
               vibe: "Life Changing", 
-              description: "The life-changing million-copy bestseller on building good habits" },
+              description: "The life-changing million-copy bestseller on building good habits", image: '📚' },
             
             { id: 16, name: "Think and Grow Rich by Napoleon Hill", brand: "General Press", category: "books", price: 149, originalPrice: 250, confidence: 94, 
               keywords: ["book", "success", "wealth", "napoleon hill", "think and grow rich"], 
               vibe: "Classic", 
-              description: "Timeless success principles that have helped millions achieve their goals" }
+              description: "Timeless success principles that have helped millions achieve their goals", image: '📚' }
         ];
-
+        
         // Trending Products Data  
         const trendingProducts = [
             { id: 't1', name: "iPhone 15 Pro Max", platform: "Instagram", mentions: 234500, trend: "#iPhone15", 
@@ -1571,7 +1715,7 @@
                 showLoading(false);
                 
                 if (results.length > 0) {
-                    showToast(`Found ${results.length} products`);
+                    showToast(`Found ${results.length} products`, 'success');
                     // Smooth scroll to results
                     document.getElementById('searchResults').scrollIntoView({ 
                         behavior: 'smooth', 
@@ -1588,22 +1732,13 @@
             console.log(`Searching for: "${searchTerm}"`);
             
             const results = ENHANCED_PRODUCT_DATABASE.filter(product => {
-                // Primary keyword matching (highest priority)
                 const keywordMatch = product.keywords.some(keyword => 
                     keyword.toLowerCase().includes(searchTerm) || 
                     searchTerm.includes(keyword.toLowerCase())
                 );
-                
-                // Name matching
                 const nameMatch = product.name.toLowerCase().includes(searchTerm);
-                
-                // Brand matching  
                 const brandMatch = product.brand.toLowerCase().includes(searchTerm);
-                
-                // Category matching
                 const categoryMatch = product.category.toLowerCase().includes(searchTerm);
-                
-                // Description matching
                 const descriptionMatch = product.description.toLowerCase().includes(searchTerm);
 
                 return keywordMatch || nameMatch || brandMatch || categoryMatch || descriptionMatch;
@@ -1622,26 +1757,15 @@
 
         function calculateRelevanceScore(product, searchTerm) {
             let score = 0;
-            
-            // Exact name match gets highest score
             if (product.name.toLowerCase().includes(searchTerm)) score += 20;
-            
-            // Keyword matches
             product.keywords.forEach(keyword => {
-                if (keyword.toLowerCase() === searchTerm) score += 15; // Exact match
+                if (keyword.toLowerCase() === searchTerm) score += 15;
                 else if (keyword.toLowerCase().includes(searchTerm)) score += 10;
                 else if (searchTerm.includes(keyword.toLowerCase())) score += 8;
             });
-            
-            // Brand match
             if (product.brand.toLowerCase().includes(searchTerm)) score += 12;
-            
-            // Category match
             if (product.category.toLowerCase().includes(searchTerm)) score += 8;
-            
-            // Confidence bonus
             score += product.confidence * 0.1;
-            
             return score;
         }
 
@@ -1660,72 +1784,40 @@
                         <div class="empty-icon">🤔</div>
                         <h3>No products found</h3>
                         <p>Try different keywords or create a poll to ask the community!</p>
-                        <button class="social-btn primary" onclick="createQuickPoll()" style="margin-top: 16px; width: auto; padding: 12px 24px;">
+                        <button class="primary-btn" onclick="createQuickPoll()" style="margin-top: 16px; width: auto; padding: 12px 24px;">
                             📊 Ask Community
                         </button>
                     </div>
                 `;
             } else {
-                productsGrid.innerHTML = results.map(product => `
-                    <div class="product-card" onclick="viewProduct(${product.id})">
-                        <div class="product-header">
-                            <span class="product-brand">${product.brand}</span>
-                            <span class="confidence-score">${product.confidence}% Match</span>
-                        </div>
-                        
-                        <h3 class="product-name">${product.name}</h3>
-                        <div class="product-price">
-                            ₹${product.price.toLocaleString()}
-                            ${product.originalPrice ? `<span class="original-price">₹${product.originalPrice.toLocaleString()}</span>` : ''}
-                            ${product.originalPrice ? `<span class="discount-badge">${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off</span>` : ''}
-                        </div>
-                        
-                        <div class="vibe-tags">
-                            <span class="vibe-tag highlight">${product.vibe}</span>
-                            ${product.skinType ? `<span class="vibe-tag">For ${product.skinType} skin</span>` : ''}
-                            <span class="vibe-tag">${product.category}</span>
-                        </div>
-                        
-                        <p class="product-description">${product.description}</p>
-                        
-                        <div class="social-actions">
-                            <button class="social-btn primary" onclick="quickBuy(${product.id}); event.stopPropagation();">
-                                Quick Buy
-                            </button>
-                            <button class="social-btn" onclick="askCommunity('${product.name}', ${product.price}); event.stopPropagation();">
-                                📊 Ask Community
-                            </button>
-                            <button class="social-btn" onclick="shareProduct(${product.id}); event.stopPropagation();">
-                                📱 Share
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
+                displayFilteredResults(results);
             }
             
-            // Show results with animation
+            // Show results with animation and expand filters
             searchResultsContainer.classList.add('show');
+            document.getElementById('filtersSection').classList.add('expanded');
         }
 
-        // Quick Search Function
         function quickSearch(term) {
             document.getElementById('mainSearchInput').value = term;
             performSmartSearch();
         }
 
-        // Filter Functions
+        // [ENHANCED] Filter Functions
         function setupFilters() {
+            document.querySelector('.filters-header').addEventListener('click', function() {
+                this.parentElement.classList.toggle('expanded');
+            });
+
             document.querySelectorAll('.filter-chip').forEach(chip => {
                 chip.addEventListener('click', function() {
                     const filterType = this.dataset.filter;
                     const filterValue = this.dataset.value;
                     
-                    // Toggle filter
                     if (this.classList.contains('active')) {
                         this.classList.remove('active');
                         currentFilters[filterType] = null;
                     } else {
-                        // Clear other filters of same type
                         document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(f => f.classList.remove('active'));
                         this.classList.add('active');
                         currentFilters[filterType] = filterValue;
@@ -1743,7 +1835,6 @@
         function applyFilters() {
             let filtered = [...currentResults];
             
-            // Apply price filter
             if (currentFilters.price) {
                 filtered = filtered.filter(product => {
                     if (currentFilters.price === '0-500') return product.price <= 500;
@@ -1753,29 +1844,21 @@
                     return true;
                 });
             }
-            
-            // Apply category filter
             if (currentFilters.category) {
                 filtered = filtered.filter(product => product.category === currentFilters.category);
             }
-            
-            // Apply confidence filter
             if (currentFilters.confidence) {
                 const minConfidence = parseInt(currentFilters.confidence.replace('+', ''));
                 filtered = filtered.filter(product => product.confidence >= minConfidence);
             }
-            
-            // Apply skin type filter
             if (currentFilters.skintype && currentFilters.skintype !== 'all') {
-                filtered = filtered.filter(product => 
-                    product.skinType === currentFilters.skintype || !product.skinType
-                );
+                filtered = filtered.filter(product => product.skinType === currentFilters.skintype || !product.skinType);
             }
             
-            // Update display
             displayFilteredResults(filtered);
         }
 
+        // [ENHANCED] Card Rendering Function with New Button Design
         function displayFilteredResults(results) {
             const resultsCount = document.getElementById('resultsCount');
             const productsGrid = document.getElementById('productsGrid');
@@ -1788,7 +1871,7 @@
                         <div class="empty-icon">🔍</div>
                         <h3>No products match your filters</h3>
                         <p>Try adjusting your filters or clearing them to see more results.</p>
-                        <button class="social-btn primary" onclick="clearAllFilters()" style="margin-top: 16px; width: auto; padding: 12px 24px;">
+                        <button class="primary-btn" onclick="clearAllFilters(event)" style="margin-top: 16px; width: auto; padding: 12px 24px;">
                             Clear Filters
                         </button>
                     </div>
@@ -1798,36 +1881,47 @@
             
             productsGrid.innerHTML = results.map(product => `
                 <div class="product-card" onclick="viewProduct(${product.id})">
-                    <div class="product-header">
-                        <span class="product-brand">${product.brand}</span>
-                        <span class="confidence-score">${product.confidence}% Match</span>
+                    <div class="product-image-placeholder">
+                        ${product.image || '🛍️'}
+                        <div class="confidence-badge">${product.confidence}% Match</div>
                     </div>
-                    
-                    <h3 class="product-name">${product.name}</h3>
-                    <div class="product-price">
-                        ₹${product.price.toLocaleString()}
-                        ${product.originalPrice ? `<span class="original-price">₹${product.originalPrice.toLocaleString()}</span>` : ''}
-                        ${product.originalPrice ? `<span class="discount-badge">${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off</span>` : ''}
-                    </div>
-                    
-                    <div class="vibe-tags">
-                        <span class="vibe-tag highlight">${product.vibe}</span>
-                        ${product.skinType ? `<span class="vibe-tag">For ${product.skinType} skin</span>` : ''}
-                        <span class="vibe-tag">${product.category}</span>
-                    </div>
-                    
-                    <p class="product-description">${product.description}</p>
-                    
-                    <div class="social-actions">
-                        <button class="social-btn primary" onclick="quickBuy(${product.id}); event.stopPropagation();">
-                            Quick Buy
-                        </button>
-                        <button class="social-btn" onclick="askCommunity('${product.name}', ${product.price}); event.stopPropagation();">
-                            📊 Ask Community
-                        </button>
-                        <button class="social-btn" onclick="shareProduct(${product.id}); event.stopPropagation();">
-                            📱 Share
-                        </button>
+                    <div class="product-content">
+                        <div class="product-header">
+                            <span class="product-brand">${product.brand}</span>
+                        </div>
+                        
+                        <h3 class="product-name">${product.name}</h3>
+                        
+                        <div class="vibe-tags">
+                            <span class="vibe-tag highlight">${product.vibe}</span>
+                            ${product.skinType ? `<span class="vibe-tag">For ${product.skinType} skin</span>` : ''}
+                            <span class="vibe-tag">${product.category}</span>
+                        </div>
+
+                        <div class="product-price">
+                            ₹${product.price.toLocaleString()}
+                            ${product.originalPrice ? `<span class="original-price">₹${product.originalPrice.toLocaleString()}</span>` : ''}
+                            ${product.originalPrice ? `<span class="discount-badge">${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off</span>` : ''}
+                        </div>
+                        
+                        <div class="product-actions">
+                            <div class="primary-action">
+                                <button class="primary-btn" onclick="quickBuy(${product.id}); event.stopPropagation();">
+                                    <span class="btn-icon">🛒</span>
+                                    Quick Buy
+                                </button>
+                            </div>
+                            <div class="secondary-actions">
+                                <button class="secondary-btn" onclick="askCommunity('${product.name}', ${product.price}); event.stopPropagation();">
+                                    <span class="btn-icon">💬</span>
+                                    Ask Community
+                                </button>
+                                <button class="secondary-btn" onclick="shareProduct(${product.id}); event.stopPropagation();">
+                                    <span class="btn-icon">📤</span>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -1837,46 +1931,27 @@
             let sorted = [...currentResults];
             
             switch(sortBy) {
-                case 'price-low':
-                    sorted.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    sorted.sort((a, b) => b.price - a.price);
-                    break;
-                case 'rating':
-                    sorted.sort((a, b) => b.confidence - a.confidence);
-                    break;
-                case 'confidence':
-                    sorted.sort((a, b) => b.confidence - a.confidence);
-                    break;
-                default: // relevance
-                    // Keep original order
-                    break;
+                case 'price-low': sorted.sort((a, b) => a.price - b.price); break;
+                case 'price-high': sorted.sort((a, b) => b.price - a.price); break;
+                case 'rating': sorted.sort((a, b) => b.confidence - a.confidence); break;
+                case 'confidence': sorted.sort((a, b) => b.confidence - a.confidence); break;
+                default: break;
             }
             
             currentResults = sorted;
-            applyFilters(); // Re-apply filters to sorted results
+            applyFilters();
         }
 
-        function clearAllFilters() {
-            currentFilters = {
-                price: null,
-                category: null,
-                confidence: null,
-                skintype: null
-            };
-            
-            document.querySelectorAll('.filter-chip').forEach(chip => {
-                chip.classList.remove('active');
-            });
-            
-            displayFilteredResults(currentResults);
+        function clearAllFilters(event) {
+            if (event) event.stopPropagation();
+            currentFilters = { price: null, category: null, confidence: null, skintype: null };
+            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+            sortResults('relevance');
         }
 
         // Voice Search Implementation
         function setupVoiceSearch() {
             const voiceBtn = document.getElementById('mainVoiceBtn');
-            
             if ('webkitSpeechRecognition' in window) {
                 const recognition = new webkitSpeechRecognition();
                 recognition.continuous = false;
@@ -1888,17 +1963,16 @@
                         recognition.stop();
                         return;
                     }
-
                     isVoiceActive = true;
                     this.classList.add('listening');
                     recognition.start();
-                    showToast('🎤 Listening... speak now!');
+                    showToast('🎤 Listening... speak now!', 'info');
                 });
 
                 recognition.onresult = function(event) {
                     const transcript = event.results[0][0].transcript;
                     document.getElementById('mainSearchInput').value = transcript;
-                    showToast(`Voice input: "${transcript}"`);
+                    showToast(`Voice input: "${transcript}"`, 'info');
                     performSmartSearch();
                 };
 
@@ -1917,21 +1991,14 @@
             }
         }
 
-        // Enhanced Social Features - Based on Research[1][29][39][40][52][53]
-
-        // Social Search Feature - Based on social search trends research[29][31][38][39]
+        // Social Search Feature
         function startSocialSearch() {
             showToast('🔍 Opening Social Search...', 'info');
             showScreen('socialSearchScreen');
         }
 
         function searchPlatform(platform) {
-            // Remove active class from all cards
-            document.querySelectorAll('.platform-search-card').forEach(card => {
-                card.classList.remove('active');
-            });
-            
-            // Add active class to clicked card
+            document.querySelectorAll('.platform-search-card').forEach(card => card.classList.remove('active'));
             event.target.closest('.platform-search-card').classList.add('active');
             
             const platformData = {
@@ -1940,327 +2007,206 @@
                 'youtube': { name: 'YouTube', icon: '📺', results: ['Product unboxing videos', 'Detailed reviews', 'Tutorial recommendations'] },
                 'twitter': { name: 'X/Twitter', icon: '🐦', results: ['Real-time product buzz', 'Deal alerts', 'Community discussions'] }
             };
-            
             const data = platformData[platform];
-            showToast(`🔍 Searching ${data.name} for trending products...`);
+            showToast(`🔍 Searching ${data.name} for trending products...`, 'info');
             
-            // Simulate search results
             setTimeout(() => {
                 const resultsContainer = document.getElementById('socialSearchResults');
-                resultsContainer.innerHTML = `
-                    <div class="feature-screen">
-                        <h3>${data.icon} ${data.name} Search Results</h3>
-                        <div class="trending-grid">
-                            ${data.results.map((result, index) => `
-                                <div class="trending-card">
-                                    <div class="trending-name">${result}</div>
-                                    <div class="platform-badge">${data.icon} ${data.name}</div>
-                                    <div class="trending-stats">
-                                        <span class="trending-mentions">${Math.floor(Math.random() * 50 + 10)}K mentions</span>
-                                        <span style="color: var(--color-primary);">#trending</span>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                showToast(`Found trending content on ${data.name}!`);
+                resultsContainer.innerHTML = `<div class="feature-screen"><h3>${data.icon} ${data.name} Search Results</h3><div class="trending-grid">${data.results.map(result => `<div class="trending-card"><div class="trending-name">${result}</div><div class="platform-badge">${data.icon} ${data.name}</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random() * 50 + 10)}K mentions</span><span style="color: var(--color-primary);">#trending</span></div></div>`).join('')}</div></div>`;
+                showToast(`Found trending content on ${data.name}!`, 'success');
             }, 1000);
         }
 
         function performSocialSearch() {
             const query = document.getElementById('socialSearchInput').value.trim();
+            if (!query) { showToast('Please enter a search term', 'error'); return; }
+            showToast(`🌐 Searching "${query}" across all social platforms...`, 'info');
             
-            if (!query) {
-                showToast('Please enter a search term', 'error');
-                return;
-            }
-            
-            showToast(`🌐 Searching "${query}" across all social platforms...`);
-            
-            // Simulate comprehensive social search
             setTimeout(() => {
                 const resultsContainer = document.getElementById('socialSearchResults');
-                resultsContainer.innerHTML = `
-                    <div class="feature-screen">
-                        <h3>🔍 Social Search Results for "${query}"</h3>
-                        <div class="platform-tabs">
-                            <button class="platform-tab active">All Platforms</button>
-                            <button class="platform-tab">📷 Instagram</button>
-                            <button class="platform-tab">🎵 TikTok</button>
-                            <button class="platform-tab">📺 YouTube</button>
-                        </div>
-                        <div class="trending-grid">
-                            <div class="trending-card">
-                                <div class="trending-name">Viral ${query} recommendations</div>
-                                <div class="platform-badge">📷 Instagram</div>
-                                <div class="trending-stats">
-                                    <span class="trending-mentions">${Math.floor(Math.random() * 100 + 20)}K mentions</span>
-                                    <span style="color: var(--color-primary);">#${query.replace(' ', '')}</span>
-                                </div>
-                            </div>
-                            <div class="trending-card">
-                                <div class="trending-name">${query} honest reviews</div>
-                                <div class="platform-badge">📺 YouTube</div>
-                                <div class="trending-stats">
-                                    <span class="trending-mentions">${Math.floor(Math.random() * 80 + 15)}K mentions</span>
-                                    <span style="color: var(--color-primary);">#review</span>
-                                </div>
-                            </div>
-                            <div class="trending-card">
-                                <div class="trending-name">Best ${query} under ₹2000</div>
-                                <div class="platform-badge">🐦 Twitter</div>
-                                <div class="trending-stats">
-                                    <span class="trending-mentions">${Math.floor(Math.random() * 60 + 10)}K mentions</span>
-                                    <span style="color: var(--color-primary);">#budget</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                showToast(`✨ Found social insights for "${query}" across platforms!`);
+                resultsContainer.innerHTML = `<div class="feature-screen"><h3>🔍 Social Search Results for "${query}"</h3><div class="platform-tabs"><button class="platform-tab active">All</button><button class="platform-tab">📷</button><button class="platform-tab">🎵</button><button class="platform-tab">📺</button></div><div class="trending-grid"><div class="trending-card"><div class="trending-name">Viral ${query} recommendations</div><div class="platform-badge">📷 Instagram</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random()*100+20)}K mentions</span></div></div><div class="trending-card"><div class="trending-name">${query} honest reviews</div><div class="platform-badge">📺 YouTube</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random()*80+15)}K mentions</span></div></div></div></div>`;
+                showToast(`✨ Found social insights for "${query}"!`, 'success');
             }, 1500);
         }
 
-        // Polls Feature - Based on interactive polling research[30][42][45][54]
+        // Polls Feature
         function createQuickPoll() {
             showToast('📊 Opening Community Polls...', 'info');
             showScreen('pollsScreen');
         }
 
         function createPoll(type) {
-            const pollTypes = {
-                'product-opinion': {
-                    title: 'Product Opinion Poll',
-                    question: 'Should I buy this product?',
-                    description: 'Get instant feedback from the community on products you\'re considering'
-                },
-                'vs-comparison': {
-                    title: 'Product Comparison',
-                    question: 'Which product is better?',
-                    description: 'Let the community help you choose between two options'
-                },
-                'budget-advice': {
-                    title: 'Budget Advice',
-                    question: 'Is this worth the price?',
-                    description: 'Ask if a product justifies its cost'
-                },
-                'trending-vote': {
-                    title: 'Trending Vote',
-                    question: 'What\'s worth buying now?',
-                    description: 'Community votes on what products are trending'
-                },
-                'gift-ideas': {
-                    title: 'Gift Recommendations',
-                    question: 'What should I gift?',
-                    description: 'Get suggestions for the perfect gift'
-                },
-                'seasonal-picks': {
-                    title: 'Seasonal Must-Haves',
-                    question: 'What are this season\'s essentials?',
-                    description: 'Community picks for seasonal products'
-                }
-            };
+            let pollQuestion = '';
             
-            const pollData = pollTypes[type];
-            showToast(`📊 Creating ${pollData.title}...`);
-            
-            // Simulate poll creation
-            setTimeout(() => {
-                showToast(`✅ ${pollData.title} created! Sharing across social platforms...`);
+            switch(type) {
+                case 'product-opinion':
+                    const product = prompt("What product are you considering buying?");
+                    if (product) pollQuestion = `Should I buy ${product}?`;
+                    break;
+                case 'vs-comparison':
+                    const item1 = prompt("Enter the first product to compare:");
+                    if (!item1) return;
+                    const item2 = prompt("Enter the second product to compare:");
+                    if (item2) pollQuestion = `Which is better: ${item1} or ${item2}?`;
+                    break;
+                case 'budget-advice':
+                    const budgetProduct = prompt("What product are you asking about?");
+                    if (!budgetProduct) return;
+                    const price = prompt(`What is the price of ${budgetProduct}?`);
+                    if (price) pollQuestion = `Is ${budgetProduct} worth ₹${price}?`;
+                    break;
+                default:
+                    pollQuestion = "A new poll was created!";
+                    break;
+            }
+
+            if (pollQuestion) {
+                 showToast(`📊 Creating poll: "${pollQuestion}"...`, 'info');
                 setTimeout(() => {
-                    showToast(`🎉 Your poll is now live! Getting responses from the community...`);
-                    loadRecentPolls();
-                }, 1000);
-            }, 800);
+                    showToast(`✅ Poll created! Sharing across social platforms...`, 'success');
+                    setTimeout(() => {
+                        showToast(`🎉 Your poll is now live!`, 'success');
+                        loadRecentPolls();
+                    }, 1000);
+                }, 800);
+            }
         }
 
         function loadRecentPolls() {
             const recentPollsList = document.getElementById('recentPollsList');
-            
             recentPollsList.innerHTML = samplePolls.map(poll => `
                 <div class="trending-card" style="margin-bottom: 16px;">
-                    <div class="trending-header">
-                        <div class="trending-name" style="font-size: 14px;">${poll.question}</div>
-                    </div>
+                    <div class="trending-header"><div class="trending-name" style="font-size: 14px;">${poll.question}</div></div>
                     <div class="platform-badge">📱 ${poll.platform}</div>
                     <div class="trending-stats">
                         <span class="trending-mentions">${Object.values(poll.votes).reduce((a, b) => a + b, 0)} votes</span>
                         <span style="color: var(--color-primary);">${Math.round(Math.random() * 12 + 2)} hours ago</span>
                     </div>
-                    <div style="margin-top: 8px; font-size: 12px;">
-                        ${Object.entries(poll.votes).map(([option, count]) => 
-                            `<span style="margin-right: 12px;">${option}: ${count}</span>`
-                        ).join('')}
-                    </div>
-                </div>
-            `).join('');
+                    <div style="margin-top: 8px; font-size: 12px;">${Object.entries(poll.votes).map(([option, count]) => `<span style="margin-right: 12px;">${option}: ${count}</span>`).join('')}</div>
+                </div>`).join('');
         }
 
-        // Groups Feature - Based on community shopping research[32][55][56]
+        // Groups Feature
         function joinGroups() {
             showToast('👥 Opening Shopping Groups...', 'info');
             showScreen('groupsScreen');
         }
 
-        function joinGroup(groupId) {
-            const groupNames = {
-                'beauty-enthusiasts': 'Beauty Enthusiasts',
-                'tech-deals': 'Tech Deals & Reviews',
-                'home-decor': 'Home & Decor Lovers',
-                'fashion-finds': 'Fashion Finds Under ₹2000',
-                'fitness-gear': 'Fitness & Wellness',
-                'book-lovers': 'Book Lovers & Learners'
-            };
+        function joinGroup(groupId, event) {
+            const card = event.target.closest('.group-card');
+            if (card.classList.contains('joined')) {
+                showToast('You are already in this group!', 'info');
+                return;
+            }
+
+            const groupName = card.querySelector('.group-info h3').textContent;
             
-            const groupName = groupNames[groupId];
-            showToast(`👥 Joining ${groupName}...`);
-            
-            // Simulate joining group
-            setTimeout(() => {
-                showToast(`✅ Successfully joined ${groupName}! You'll get notifications about new discussions and deals.`);
-                
-                // Update UI to show joined status
-                event.target.closest('.group-card').style.border = '2px solid var(--color-success)';
-                event.target.closest('.group-card').style.background = '#f0fff4';
-            }, 1000);
+            if (confirm(`Do you want to join the "${groupName}" group?`)) {
+                showToast(`👥 Joining ${groupName}...`, 'info');
+                setTimeout(() => {
+                    showToast(`✅ Successfully joined ${groupName}!`, 'success');
+                    card.classList.add('joined');
+                }, 1000);
+            }
         }
 
         function createShoppingGroup() {
             showToast('👥 Creating new shopping group...', 'info');
-            
-            // Simulate group creation
             setTimeout(() => {
                 const groupName = prompt('What would you like to name your shopping group?', 'My Shopping Community');
                 if (groupName) {
-                    showToast(`🎉 "${groupName}" created successfully! Invite friends to join your community.`);
+                    showToast(`🎉 "${groupName}" created successfully! Invite friends to join your community.`, 'success');
                 }
             }, 500);
         }
 
         function groupDeals() {
             showToast('💎 Loading exclusive group deals...', 'info');
-            
-            // Simulate loading deals
-            setTimeout(() => {
-                showToast('💎 Found 15 exclusive deals for group members! Check your notifications.');
-            }, 1000);
+            setTimeout(() => { showToast('💎 Found 15 exclusive deals for group members!', 'success'); }, 1000);
         }
 
         function sharedWishlists() {
             showToast('📝 Opening collaborative shopping lists...', 'info');
-            
-            // Simulate loading wishlists
-            setTimeout(() => {
-                showToast('📝 You have 3 shared wishlists with friends. Collaborate on your next purchases!');
-            }, 1000);
+            setTimeout(() => { showToast('📝 You have 3 shared wishlists with your friends.', 'info'); }, 1000);
         }
 
-        // Trends Feature - Based on trends research[40][47][49]
+        // Trends Feature
         function loadTrendsScreen() {
-            const trendsGrid = document.getElementById('trendsGrid');
-            
+            const trendsGrid = document.getElementById('trendsGridPage');
             const trendingData = [
                 { name: 'Viral Skincare Routine', platform: 'Instagram', mentions: '2.5M', trend: '#GlowUp2025' },
                 { name: 'Budget Tech Hauls', platform: 'TikTok', mentions: '1.8M', trend: '#TechFinds' },
                 { name: 'Home Aesthetic DIY', platform: 'YouTube', mentions: '980K', trend: '#HomeVibes' },
-                { name: 'Sustainable Fashion', platform: 'Twitter', mentions: '750K', trend: '#SustainableStyle' },
-                { name: 'Fitness Equipment Reviews', platform: 'Instagram', mentions: '650K', trend: '#HomeGym' },
-                { name: 'Book Recommendations', platform: 'Twitter', mentions: '420K', trend: '#BookLovers' }
+                { name: 'Sustainable Fashion', platform: 'Twitter', mentions: '750K', trend: '#SustainableStyle' }
             ];
-            
-            trendsGrid.innerHTML = trendingData.map(trend => `
-                <div class="trending-card">
-                    <div class="trending-header">
-                        <div class="trending-name">${trend.name}</div>
-                        <div class="trending-price">Live</div>
-                    </div>
-                    <div class="platform-badge">${getPlatformIcon(trend.platform)} ${trend.platform}</div>
-                    <div class="trending-stats">
-                        <span class="trending-mentions">${trend.mentions} mentions</span>
-                        <span style="color: var(--color-primary);">${trend.trend}</span>
-                    </div>
-                </div>
-            `).join('');
+            trendsGrid.innerHTML = trendingData.map(trend => `<div class="trending-card"><div class="trending-header"><div class="trending-name">${trend.name}</div><div class="trending-price">Live</div></div><div class="platform-badge">${getPlatformIcon(trend.platform)} ${trend.platform}</div><div class="trending-stats"><span class="trending-mentions">${trend.mentions} mentions</span><span style="color: var(--color-primary);">${trend.trend}</span></div></div>`).join('');
         }
 
         // Trending Products Functions
         function renderTrendingProducts() {
             const trendingGrid = document.getElementById('trendingGrid');
-            
-            trendingGrid.innerHTML = trendingProducts.map(product => `
-                <div class="trending-card" onclick="exploreProduct('${product.id}')">
-                    <div class="trending-header">
-                        <div class="trending-name">${product.name}</div>
-                        <div class="trending-price">${product.price}</div>
-                    </div>
-                    
-                    <div class="platform-badge">${getPlatformIcon(product.platform)} ${product.platform}</div>
-                    
-                    <div class="trending-stats">
-                        <span class="trending-mentions">${formatMentions(product.mentions)} mentions</span>
-                        <span style="color: var(--color-primary);">${product.trend}</span>
-                    </div>
-                </div>
-            `).join('');
+            trendingGrid.innerHTML = trendingProducts.map(product => `<div class="trending-card" onclick="exploreProduct('${product.id}')"><div class="trending-header"><div class="trending-name">${product.name}</div><div class="trending-price">${product.price}</div></div><div class="platform-badge">${getPlatformIcon(product.platform)} ${product.platform}</div><div class="trending-stats"><span class="trending-mentions">${formatMentions(product.mentions)} mentions</span><span style="color: var(--color-primary);">${product.trend}</span></div></div>`).join('');
         }
 
-        // Enhanced AI Recommendations
+        // AI Recommendations
         function browseRecommendations() {
-            showToast('✨ Analyzing your preferences and generating AI recommendations...', 'info');
-            
-            // Simulate AI processing
+            showToast('✨ Analyzing your preferences for AI recommendations...', 'info');
             setTimeout(() => {
-                // Get some personalized products based on user's search history
-                const recommendations = ENHANCED_PRODUCT_DATABASE.slice(0, 6).map(product => ({
-                    ...product,
-                    reason: getRecommendationReason()
-                }));
-                
-                // Update main search input and trigger search to show recommendations
+                const recommendations = ENHANCED_PRODUCT_DATABASE.slice(0, 6);
                 document.getElementById('mainSearchInput').value = 'AI recommendations';
                 displaySearchResults(recommendations, 'AI Personalized Recommendations');
-                showScreen('homeScreen');
-                
-                // Scroll to results
-                document.getElementById('searchResults').scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
-                
-                showToast('✨ Here are your personalized AI recommendations!');
-            }, 2000);
+                showToast('✨ Here are your personalized AI recommendations!', 'success');
+            }, 1000);
         }
 
-        function getRecommendationReason() {
-            const reasons = [
-                'Based on your recent searches',
-                'Popular with users like you',
-                'Trending in your area',
-                'Highly rated by the community',
-                'Matches your preferences',
-                'Currently on sale'
-            ];
-            return reasons[Math.floor(Math.random() * reasons.length)];
+        // Product Actions
+        function quickBuy(productId) {
+            const product = ENHANCED_PRODUCT_DATABASE.find(p => p.id === productId);
+            showToast(`🛒 Added "${product.name}" to cart!`, 'success');
+        }
+
+        function askCommunity(productName, price) {
+            showToast(`📊 Creating poll: "Should I buy ${productName} for ₹${price.toLocaleString()}?"`, 'success');
+        }
+
+        function shareProduct(productId) {
+            const product = ENHANCED_PRODUCT_DATABASE.find(p => p.id === productId);
+            if (navigator.share) {
+                navigator.share({
+                    title: product.name,
+                    text: `Check out this ${product.vibe} product: ${product.name} for ₹${product.price.toLocaleString()}`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers without native sharing
+                navigator.clipboard.writeText(`Check out ${product.name} - ₹${product.price.toLocaleString()}`);
+                showToast('✅ Product link copied to clipboard!', 'success');
+            }
+        }
+
+        function viewProduct(productId) {
+            const product = ENHANCED_PRODUCT_DATABASE.find(p => p.id === productId);
+            console.log('Viewing product:', product);
+            showToast(`👁️ Viewing "${product.name}"`, 'info');
+        }
+
+        function exploreProduct(productId) {
+            showToast('🔍 Exploring trending product...', 'info');
         }
 
         // Utility Functions
         function formatMentions(count) {
-            if (count >= 1000000) {
-                return (count / 1000000).toFixed(1) + 'M';
-            } else if (count >= 1000) {
-                return (count / 1000).toFixed(1) + 'K';
-            }
+            if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M';
+            if (count >= 1000) return (count / 1000).toFixed(1) + 'K';
             return count.toString();
         }
 
         function getPlatformIcon(platform) {
             const icons = {
                 'Instagram': '📷',
-                'YouTube': '📺', 
+                'YouTube': '📺',
                 'Twitter': '🐦',
                 'WhatsApp': '💬',
-                'Reddit': '💭',
                 'TikTok': '🎵'
             };
             return icons[platform] || '🌐';
@@ -2272,176 +2218,61 @@
 
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
-            const bgColor = type === 'error' ? 'var(--color-error)' : 
-                           type === 'success' ? 'var(--color-success)' : 
-                           'var(--color-primary)';
-                           
             toast.className = `status-message status-${type}`;
             toast.textContent = message;
-            
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
 
         // Screen Management
         function showScreen(screenId) {
-            // Hide all screens
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
-            
-            // Show target screen
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            // Update nav buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
+            const btnId = { 
+                homeScreen: 'homeBtn', 
+                trendsScreen: 'trendsBtn', 
+                pollsScreen: 'pollsBtn', 
+                groupsScreen: 'groupsBtn' 
+            }[screenId];
+            
+            if(btnId) document.getElementById(btnId).classList.add('active');
+            
+            if (screenId === 'pollsScreen') loadRecentPolls();
+            if (screenId === 'trendsScreen') loadTrendsScreen();
+        }
+
+        // Initialize Application
+        function initializeApp() {
+            document.getElementById('mainSearchInput').addEventListener('keypress', e => { 
+                if (e.key === 'Enter') performSmartSearch(); 
             });
             
-            // Set active nav button and load screen-specific content
-            const navButtonMap = {
-                'homeScreen': 'homeBtn',
-                'socialSearchScreen': null,
-                'trendsScreen': 'trendsBtn', 
-                'pollsScreen': 'pollsBtn',
-                'groupsScreen': 'groupsBtn'
-            };
-            
-            if (navButtonMap[screenId]) {
-                document.getElementById(navButtonMap[screenId]).classList.add('active');
-            }
-            
-            // Load screen-specific content
-            if (screenId === 'trendsScreen') {
-                loadTrendsScreen();
-            } else if (screenId === 'pollsScreen') {
-                loadRecentPolls();
-            }
-        }
-
-        // Social Actions
-        function quickBuy(productId) {
-            const product = currentResults.find(p => p.id === productId) || ENHANCED_PRODUCT_DATABASE.find(p => p.id === productId);
-            if (!product) return;
-            
-            showToast(`🛒 Opening purchase page for ${product.name}...`);
-            
-            // Simulate opening purchase page
-            setTimeout(() => {
-                alert(`🎉 Great choice!\n\n"${product.name}" by ${product.brand}\nPrice: ₹${product.price.toLocaleString()}\nConfidence: ${product.confidence}%\n\nIn a real app, this would open the purchase page.`);
-            }, 1000);
-        }
-
-        function askCommunity(productName, price) {
-            showToast(`📊 Creating poll for ${productName}...`);
-            
-            setTimeout(() => {
-                alert(`📊 Poll Created!\n\n"Should I buy ${productName} for ₹${price.toLocaleString()}?"\n\n✓ Posted to WhatsApp groups\n✓ Shared on Instagram Stories\n✓ Posted to X/Twitter\n\nYou'll get notifications as people respond!`);
-            }, 1000);
-        }
-
-        function shareProduct(productId) {
-            const product = currentResults.find(p => p.id === productId) || ENHANCED_PRODUCT_DATABASE.find(p => p.id === productId);
-            if (!product) return;
-            
-            showToast(`📱 Sharing ${product.name} with your network...`);
-            
-            if (navigator.share) {
-                navigator.share({
-                    title: `Check out ${product.name}`,
-                    text: `Found this great product: ${product.name} for ₹${product.price.toLocaleString()}!`,
-                    url: window.location.href
-                });
-            } else {
-                const shareText = `Check out ${product.name} for ₹${product.price.toLocaleString()}! Found via ShopSocial.`;
-                navigator.clipboard.writeText(shareText);
-                showToast('Share text copied to clipboard!');
-            }
-        }
-
-        function viewProduct(productId) {
-            const product = currentResults.find(p => p.id === productId) || ENHANCED_PRODUCT_DATABASE.find(p => p.id === productId);
-            if (!product) return;
-            
-            showToast(`👁️ Viewing details for ${product.name}...`);
-            console.log('Product details:', product);
-        }
-
-        function exploreProduct(productId) {
-            showToast(`🔍 Exploring ${productId} across social platforms...`);
-        }
-
-        // Event Listeners Setup
-        function setupEventListeners() {
-            // Search on Enter key
-            document.getElementById('mainSearchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    performSmartSearch();
-                }
-            });
-
-            // Enhanced Navigation with working features
             document.getElementById('homeBtn').addEventListener('click', () => showScreen('homeScreen'));
             document.getElementById('trendsBtn').addEventListener('click', () => showScreen('trendsScreen'));
             document.getElementById('pollsBtn').addEventListener('click', () => showScreen('pollsScreen'));
             document.getElementById('groupsBtn').addEventListener('click', () => showScreen('groupsScreen'));
             
-            // Platform tabs
+            // Initialize platform tabs
             document.querySelectorAll('.platform-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
-                    this.parentElement.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
+                    const parent = this.parentElement;
+                    parent.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    const platform = this.dataset.platform || this.dataset.trendPlatform;
-                    if (platform) {
-                        filterTrendingProducts(platform);
-                    }
                 });
             });
-        }
-
-        function filterTrendingProducts(platform) {
-            const trendingGrid = document.getElementById('trendingGrid');
-            let filteredProducts = trendingProducts;
             
-            if (platform !== 'all') {
-                filteredProducts = trendingProducts.filter(p => 
-                    p.platform.toLowerCase().includes(platform.toLowerCase())
-                );
-            }
-            
-            trendingGrid.innerHTML = filteredProducts.map(product => `
-                <div class="trending-card" onclick="exploreProduct('${product.id}')">
-                    <div class="trending-header">
-                        <div class="trending-name">${product.name}</div>
-                        <div class="trending-price">${product.price}</div>
-                    </div>
-                    
-                    <div class="platform-badge">${getPlatformIcon(product.platform)} ${product.platform}</div>
-                    
-                    <div class="trending-stats">
-                        <span class="trending-mentions">${formatMentions(product.mentions)} mentions</span>
-                        <span style="color: var(--color-primary);">${product.trend}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Initialize Application
-        function initializeApp() {
-            console.log('🚀 Initializing ShopSocial Enhanced with Working Social Features');
-            setupEventListeners();
+            renderTrendingProducts();
             setupVoiceSearch();
             setupFilters();
-            renderTrendingProducts();
-            console.log('✅ ShopSocial loaded successfully with all social features working!');
+            
+            console.log('🚀 QwikPik Enhanced - All Features Loaded Successfully!');
         }
 
-        // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', initializeApp);
-        
-        console.log('✅ ShopSocial Enhanced - All features now fully functional based on 2025 social commerce research!');
     </script>
 </body>
 </html>
+
 
