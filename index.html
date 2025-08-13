@@ -429,6 +429,24 @@
         .sort-dropdown:hover {
             border-color: var(--color-primary);
         }
+        
+        /* ADDED: Recommended Strip Styling */
+        .recommended-strip {
+            padding: 24px;
+            border-bottom: 2px solid var(--color-primary);
+            background: linear-gradient(135deg, #e8f0fe, #fff3e0);
+        }
+        .recommended-strip h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--color-primary);
+            text-align: center;
+        }
+        .recommended-strip .products-grid {
+            padding: 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
 
         /* [ENHANCED] Products Grid & Cards */
         .products-grid {
@@ -536,6 +554,24 @@
             font-size: 11px;
             font-weight: 700;
         }
+        
+        /* ADDED: Trust Breakdown Styling */
+        .trust-breakdown {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-bottom: 16px;
+            background: var(--color-bg);
+            padding: 8px;
+            border-radius: 8px;
+        }
+        
+        .trust-breakdown span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
 
         .vibe-tags {
             display: flex;
@@ -595,9 +631,10 @@
             box-shadow: 0 6px 20px rgba(66, 133, 244, 0.3);
         }
 
+        /* MODIFIED: Changed to 3-column grid for new button */
         .secondary-actions {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 12px;
         }
 
@@ -1018,20 +1055,23 @@
 
         .status-message {
             position: fixed;
-            top: 20px;
+            top: 80px; /* MODIFIED: Pushed down to avoid nav overlap */
             right: 20px;
             padding: 12px 20px;
-            border-radius: 4px;
+            border-radius: 8px;
             color: white;
             font-weight: 500;
             z-index: 1000;
             animation: slideIn 0.3s ease;
-            background: var(--color-primary);
+            box-shadow: var(--shadow-lg);
+            max-width: 90%;
+            text-align: left;
         }
         
         .status-message.status-success { background: var(--color-success); }
         .status-message.status-error { background: var(--color-error); }
         .status-message.status-info { background: var(--color-primary); }
+        .status-message b { display: block; margin-bottom: 4px; }
 
         @keyframes slideIn {
             from { transform: translateX(400px); }
@@ -1084,6 +1124,7 @@
                 grid-template-columns: 1fr;
             }
             
+            /* MODIFIED: Change to 1 column on mobile */
             .secondary-actions {
                 grid-template-columns: 1fr;
             }
@@ -1199,7 +1240,6 @@
                                         <div class="filter-chip" data-filter="category" data-value="books">Books</div>
                                     </div>
                                 </div>
-                                <!-- ADDED: Scenario Filter Group -->
                                 <div class="filter-group">
                                     <div class="filter-group-title">🎯 Scenario</div>
                                     <div class="filter-options">
@@ -1240,8 +1280,8 @@
                         </div>
                     </div>
 
-                    <div class="products-grid" id="productsGrid">
-                        <!-- Products will populate here -->
+                    <div id="productsGridWrapper">
+                        <!-- Recommended Strip and Products Grid will populate here -->
                     </div>
                 </div>
                 <!-- Quick Actions -->
@@ -1583,124 +1623,34 @@
         </div>
     </div>
     <script>
-        // MODIFIED: Added 'features' and 'scenarios' to products
+        // MODIFIED: Enriched database with popularity and trust signals
         const ENHANCED_PRODUCT_DATABASE = [
-            // Beauty & Personal Care - Facewash Category
-            { id: 1, name: "CeraVe Hydrating Cleanser for Dry Skin", brand: "CeraVe", category: "beauty", price: 1299, originalPrice: 1699, confidence: 94, 
-              keywords: ["facewash", "face wash", "cleanser", "dry skin", "hydrating", "cerave"], 
-              skinType: "dry", vibe: "Dermat Recommended", 
-              description: "Gentle, non-foaming cleanser with ceramides and hyaluronic acid for dry to very dry skin", image: '🧴',
-              features: ['verified_reviews'], scenarios: ['college', 'gift'] },
-            
-            { id: 2, name: "Neutrogena Oil-Free Face Wash for Oily Skin", brand: "Neutrogena", category: "beauty", price: 699, originalPrice: 999, confidence: 91, 
-              keywords: ["facewash", "face wash", "oil-free", "oily skin", "neutrogena", "cleanser"], 
-              skinType: "oily", vibe: "Oil Control", 
-              description: "Deep-cleaning face wash that removes excess oil without over-drying", image: '🧴',
-              features: [], scenarios: [] },
-            
-            { id: 3, name: "Himalaya Purifying Neem Face Wash", brand: "Himalaya", category: "beauty", price: 195, originalPrice: 250, confidence: 88, 
-              keywords: ["facewash", "face wash", "neem", "natural", "acne", "himalaya", "purifying"], 
-              skinType: "oily", vibe: "Natural", 
-              description: "Herbal face wash with neem and turmeric for acne-prone skin", image: '🌿',
-              features: [], scenarios: [] },
-            
-            { id: 4, name: "Plum Green Tea Pore Cleansing Face Wash", brand: "Plum", category: "beauty", price: 349, originalPrice: 450, confidence: 89, 
-              keywords: ["facewash", "face wash", "green tea", "pore cleansing", "plum"], 
-              skinType: "oily", vibe: "Pore Cleansing", 
-              description: "Gentle gel cleanser with green tea extract for deep pore cleansing", image: '🌿',
-              features: [], scenarios: [] },
-            
-            { id: 5, name: "Mamaearth Tea Tree Face Wash", brand: "Mamaearth", category: "beauty", price: 249, originalPrice: 399, confidence: 87, 
-              keywords: ["facewash", "face wash", "tea tree", "acne", "natural", "mamaearth"], 
-              skinType: "oily", vibe: "Acne Care", 
-              description: "Natural face wash with tea tree oil for acne-prone and oily skin", image: '🌿',
-              features: [], scenarios: [] },
-
-            // Beauty - Moisturizers
-            { id: 6, name: "Olay Regenerist Micro-Sculpting Cream", brand: "Olay", category: "beauty", price: 2999, originalPrice: 3999, confidence: 93, 
-              keywords: ["moisturizer", "moisturiser", "anti-aging", "olay", "cream"], 
-              skinType: "all", vibe: "Anti-Aging", 
-              description: "Advanced anti-aging moisturizer with amino-peptides and niacinamide", image: '🧴',
-              features: [], scenarios: [] },
-            
-            { id: 7, name: "Neutrogena Hydra Boost Water Gel", brand: "Neutrogena", category: "beauty", price: 1299, originalPrice: 1699, confidence: 90, 
-              keywords: ["moisturizer", "moisturiser", "gel", "hydrating", "neutrogena", "water gel"], 
-              skinType: "oily", vibe: "Lightweight", 
-              description: "Oil-free gel moisturizer with hyaluronic acid for oily skin", image: '💧',
-              features: ['lightweight', 'verified_reviews'], scenarios: ['college', 'gift'] },
-            
-            // Beauty - Serums
-            { id: 8, name: "The Ordinary Niacinamide 10% + Zinc 1%", brand: "The Ordinary", category: "beauty", price: 899, originalPrice: 1299, confidence: 96, 
-              keywords: ["serum", "niacinamide", "ordinary", "acne", "oily skin"], 
-              skinType: "oily", vibe: "Blemish Control", 
-              description: "High-strength niacinamide serum to reduce appearance of blemishes", image: '💧',
-              features: [], scenarios: [] },
-            
-            { id: 9, name: "Minimalist Vitamin C 10% Face Serum", brand: "Minimalist", category: "beauty", price: 599, originalPrice: 999, confidence: 92, 
-              keywords: ["serum", "vitamin c", "minimalist", "brightening", "antioxidant"], 
-              skinType: "all", vibe: "Brightening", 
-              description: "Stable vitamin C serum for brightening and protecting skin", image: '✨',
-              features: [], scenarios: [] },
-
-            // Electronics - Headphones & Audio
-            { id: 10, name: "boAt Rockerz 450 Bluetooth Headphones", brand: "boAt", category: "electronics", price: 1299, originalPrice: 2990, confidence: 95, 
-              keywords: ["headphones", "bluetooth", "wireless", "music", "bass", "boat"], 
-              vibe: "Bass Heavy", 
-              description: "Wireless Bluetooth headphones with Extra Bass and 15-hour playback", image: '🎧',
-              features: ['long_battery', 'durable'], scenarios: ['college', 'gym', 'commute'] },
-            
-            { id: 11, name: "Sony WH-CH720N Noise Canceling Headphones", brand: "Sony", category: "electronics", price: 8999, originalPrice: 12999, confidence: 92, 
-              keywords: ["headphones", "noise cancelling", "sony", "wireless", "bluetooth"], 
-              vibe: "Premium", 
-              description: "Over-ear headphones with active noise canceling and 35-hour battery", image: '🎧',
-              features: ['long_battery'], scenarios: ['commute', 'wfh'] },
-            
-            { id: 12, name: "JBL Tune 770NC Wireless Headphones", brand: "JBL", category: "electronics", price: 7999, originalPrice: 9999, confidence: 89, 
-              keywords: ["headphones", "jbl", "wireless", "noise cancelling"], 
-              vibe: "Balanced", 
-              description: "Wireless over-ear headphones with adaptive noise cancelling", image: '🎧',
-              features: ['long_battery'], scenarios: ['commute', 'wfh'] },
-
-            // Home & Kitchen
-            { id: 13, name: "Milton Thermosteel Water Bottle 1000ml", brand: "Milton", category: "home", price: 899, originalPrice: 1299, confidence: 91, 
-              keywords: ["water bottle", "milton", "steel", "insulated", "thermos"], 
-              vibe: "Durable", 
-              description: "Vacuum insulated stainless steel water bottle keeps drinks hot/cold for 24 hours", image: '💧',
-              features: ['durable'], scenarios: ['commute', 'gym'] },
-            
-            { id: 14, name: "Prestige Svachh Mini Pressure Cooker 2L", brand: "Prestige", category: "home", price: 1299, originalPrice: 1899, confidence: 88, 
-              keywords: ["pressure cooker", "prestige", "kitchen", "cooking", "mini"], 
-              vibe: "Essential", 
-              description: "Compact pressure cooker perfect for small families with safety features", image: '🍳',
-              features: [], scenarios: [] },
-            // Books
-            { id: 15, name: "Atomic Habits by James Clear", brand: "Random House", category: "books", price: 399, originalPrice: 699, confidence: 98, 
-              keywords: ["book", "habits", "self-help", "productivity", "james clear", "atomic habits"], 
-              vibe: "Life Changing", 
-              description: "The life-changing million-copy bestseller on building good habits", image: '📚',
-              features: [], scenarios: ['college', 'wfh', 'gift'] },
-            
-            { id: 16, name: "Think and Grow Rich by Napoleon Hill", brand: "General Press", category: "books", price: 149, originalPrice: 250, confidence: 94, 
-              keywords: ["book", "success", "wealth", "napoleon hill", "think and grow rich"], 
-              vibe: "Classic", 
-              description: "Timeless success principles that have helped millions achieve their goals", image: '📚',
-              features: [], scenarios: ['wfh', 'gift'] }
+            { id: 1, name: "CeraVe Hydrating Cleanser for Dry Skin", brand: "CeraVe", category: "beauty", price: 1299, originalPrice: 1699, confidence: 94, keywords: ["facewash", "face wash", "cleanser", "dry skin", "hydrating", "cerave"], skinType: "dry", vibe: "Dermat Recommended", description: "Gentle, non-foaming cleanser with ceramides and hyaluronic acid for dry to very dry skin", image: '🧴', features: ['verified_reviews'], scenarios: ['college', 'gift'], popularity: 95, trust: { marketplace: 92, video: 88, community: 85, recency: 10 } },
+            { id: 2, name: "Neutrogena Oil-Free Face Wash for Oily Skin", brand: "Neutrogena", category: "beauty", price: 699, originalPrice: 999, confidence: 91, keywords: ["facewash", "face wash", "oil-free", "oily skin", "neutrogena", "cleanser"], skinType: "oily", vibe: "Oil Control", description: "Deep-cleaning face wash that removes excess oil without over-drying", image: '🧴', features: [], scenarios: ['college'], popularity: 88, trust: { marketplace: 85, video: 78, community: 72, recency: 25 } },
+            { id: 3, name: "Himalaya Purifying Neem Face Wash", brand: "Himalaya", category: "beauty", price: 195, originalPrice: 250, confidence: 88, keywords: ["facewash", "face wash", "neem", "natural", "acne", "himalaya", "purifying"], skinType: "oily", vibe: "Natural", description: "Herbal face wash with neem and turmeric for acne-prone skin", image: '🌿', features: [], scenarios: [], popularity: 92, trust: { marketplace: 89, video: 75, community: 80, recency: 5 } },
+            { id: 4, name: "Plum Green Tea Pore Cleansing Face Wash", brand: "Plum", category: "beauty", price: 349, originalPrice: 450, confidence: 89, keywords: ["facewash", "face wash", "green tea", "pore cleansing", "plum"], skinType: "oily", vibe: "Pore Cleansing", description: "Gentle gel cleanser with green tea extract for deep pore cleansing", image: '🌿', features: [], scenarios: ['college'], popularity: 85, trust: { marketplace: 82, video: 80, community: 77, recency: 40 } },
+            { id: 5, name: "Mamaearth Tea Tree Face Wash", brand: "Mamaearth", category: "beauty", price: 249, originalPrice: 399, confidence: 87, keywords: ["facewash", "face wash", "tea tree", "acne", "natural", "mamaearth"], skinType: "oily", vibe: "Acne Care", description: "Natural face wash with tea tree oil for acne-prone and oily skin", image: '🌿', features: [], scenarios: [], popularity: 82, trust: { marketplace: 80, video: 72, community: 75, recency: 60 } },
+            { id: 6, name: "Olay Regenerist Micro-Sculpting Cream", brand: "Olay", category: "beauty", price: 2999, originalPrice: 3999, confidence: 93, keywords: ["moisturizer", "moisturiser", "anti-aging", "olay", "cream"], skinType: "all", vibe: "Anti-Aging", description: "Advanced anti-aging moisturizer with amino-peptides and niacinamide", image: '🧴', features: [], scenarios: ['gift'], popularity: 80, trust: { marketplace: 90, video: 85, community: 82, recency: 15 } },
+            { id: 7, name: "Neutrogena Hydra Boost Water Gel", brand: "Neutrogena", category: "beauty", price: 1299, originalPrice: 1699, confidence: 90, keywords: ["moisturizer", "moisturiser", "gel", "hydrating", "neutrogena", "water gel"], skinType: "oily", vibe: "Lightweight", description: "Oil-free gel moisturizer with hyaluronic acid for oily skin", image: '💧', features: ['lightweight', 'verified_reviews'], scenarios: ['college', 'gift'], popularity: 91, trust: { marketplace: 88, video: 84, community: 80, recency: 8 } },
+            { id: 8, name: "The Ordinary Niacinamide 10% + Zinc 1%", brand: "The Ordinary", category: "beauty", price: 899, originalPrice: 1299, confidence: 96, keywords: ["serum", "niacinamide", "ordinary", "acne", "oily skin"], skinType: "oily", vibe: "Blemish Control", description: "High-strength niacinamide serum to reduce appearance of blemishes", image: '💧', features: [], scenarios: [], popularity: 98, trust: { marketplace: 95, video: 92, community: 90, recency: 12 } },
+            { id: 9, name: "Minimalist Vitamin C 10% Face Serum", brand: "Minimalist", category: "beauty", price: 599, originalPrice: 999, confidence: 92, keywords: ["serum", "vitamin c", "minimalist", "brightening", "antioxidant"], skinType: "all", vibe: "Brightening", description: "Stable vitamin C serum for brightening and protecting skin", image: '✨', features: [], scenarios: [], popularity: 89, trust: { marketplace: 87, video: 83, community: 81, recency: 20 } },
+            { id: 10, name: "boAt Rockerz 450 Bluetooth Headphones", brand: "boAt", category: "electronics", price: 1299, originalPrice: 2990, confidence: 95, keywords: ["headphones", "bluetooth", "wireless", "music", "bass", "boat"], vibe: "Bass Heavy", description: "Wireless Bluetooth headphones with Extra Bass and 15-hour playback", image: '🎧', features: ['long_battery', 'durable'], scenarios: ['college', 'gym', 'commute'], popularity: 97, trust: { marketplace: 94, video: 90, community: 88, recency: 5 } },
+            { id: 11, name: "Sony WH-CH720N Noise Canceling Headphones", brand: "Sony", category: "electronics", price: 8999, originalPrice: 12999, confidence: 92, keywords: ["headphones", "noise cancelling", "sony", "wireless", "bluetooth"], vibe: "Premium", description: "Over-ear headphones with active noise canceling and 35-hour battery", image: '🎧', features: ['long_battery'], scenarios: ['commute', 'wfh'], popularity: 85, trust: { marketplace: 91, video: 87, community: 84, recency: 35 } },
+            { id: 12, name: "JBL Tune 770NC Wireless Headphones", brand: "JBL", category: "electronics", price: 7999, originalPrice: 9999, confidence: 89, keywords: ["headphones", "jbl", "wireless", "noise cancelling"], vibe: "Balanced", description: "Wireless over-ear headphones with adaptive noise cancelling", image: '🎧', features: ['long_battery'], scenarios: ['commute', 'wfh'], popularity: 83, trust: { marketplace: 86, video: 82, community: 80, recency: 45 } },
+            { id: 13, name: "Milton Thermosteel Water Bottle 1000ml", brand: "Milton", category: "home", price: 899, originalPrice: 1299, confidence: 91, keywords: ["water bottle", "milton", "steel", "insulated", "thermos"], vibe: "Durable", description: "Vacuum insulated stainless steel water bottle keeps drinks hot/cold for 24 hours", image: '💧', features: ['durable'], scenarios: ['commute', 'gym'], popularity: 94, trust: { marketplace: 90, video: 85, community: 88, recency: 18 } },
+            { id: 14, name: "Prestige Svachh Mini Pressure Cooker 2L", brand: "Prestige", category: "home", price: 1299, originalPrice: 1899, confidence: 88, keywords: ["pressure cooker", "prestige", "kitchen", "cooking", "mini"], vibe: "Essential", description: "Compact pressure cooker perfect for small families with safety features", image: '🍳', features: [], scenarios: [], popularity: 80, trust: { marketplace: 85, video: 75, community: 78, recency: 70 } },
+            { id: 15, name: "Atomic Habits by James Clear", brand: "Random House", category: "books", price: 399, originalPrice: 699, confidence: 98, keywords: ["book", "habits", "self-help", "productivity", "james clear", "atomic habits"], vibe: "Life Changing", description: "The life-changing million-copy bestseller on building good habits", image: '📚', features: [], scenarios: ['college', 'wfh', 'gift'], popularity: 99, trust: { marketplace: 96, video: 94, community: 95, recency: 3 } },
+            { id: 16, name: "Think and Grow Rich by Napoleon Hill", brand: "General Press", category: "books", price: 149, originalPrice: 250, confidence: 94, keywords: ["book", "success", "wealth", "napoleon hill", "think and grow rich"], vibe: "Classic", description: "Timeless success principles that have helped millions achieve their goals", image: '📚', features: [], scenarios: ['wfh', 'gift'], popularity: 87, trust: { marketplace: 90, video: 85, community: 88, recency: 100 } }
         ];
         
         // Trending Products Data  
         const trendingProducts = [
-            { id: 't1', name: "iPhone 15 Pro Max", platform: "Instagram", mentions: 234500, trend: "#iPhone15", 
-              price: "₹1,29,900", category: "electronics" },
-            { id: 't2', name: "Rare Beauty Blush", platform: "YouTube", mentions: 156700, trend: "#rarebeauty", 
-              price: "₹2,200", category: "beauty" },
-            { id: 't3', name: "Stanley Tumbler", platform: "Twitter", mentions: 89200, trend: "#StanleyTumbler", 
-              price: "₹3,500", category: "home" },
-            { id: 't4', name: "AirPods Pro 2", platform: "Instagram", mentions: 198300, trend: "#AirPodsProMax", 
-              price: "₹24,900", category: "electronics" },
-            { id: 't5', name: "Nykaa Face Wash", platform: "WhatsApp", mentions: 67400, trend: "#SkincareRoutine", 
-              price: "₹299", category: "beauty" },
-            { id: 't6', name: "Kindle Paperwhite", platform: "Twitter", mentions: 43200, trend: "#KindleReads", 
-              price: "₹13,999", category: "books" }
+            { id: 't1', name: "iPhone 15 Pro Max", platform: "Instagram", mentions: 234500, trend: "#iPhone15", price: "₹1,29,900", category: "electronics" },
+            { id: 't2', name: "Rare Beauty Blush", platform: "YouTube", mentions: 156700, trend: "#rarebeauty", price: "₹2,200", category: "beauty" },
+            { id: 't3', name: "Stanley Tumbler", platform: "Twitter", mentions: 89200, trend: "#StanleyTumbler", price: "₹3,500", category: "home" },
+            { id: 't4', name: "AirPods Pro 2", platform: "Instagram", mentions: 198300, trend: "#AirPodsProMax", price: "₹24,900", category: "electronics" },
+            { id: 't5', name: "Nykaa Face Wash", platform: "WhatsApp", mentions: 67400, trend: "#SkincareRoutine", price: "₹299", category: "beauty" },
+            { id: 't6', name: "Kindle Paperwhite", platform: "Twitter", mentions: 43200, trend: "#KindleReads", price: "₹13,999", category: "books" }
         ];
 
         // Sample Polls Data
@@ -1712,7 +1662,6 @@
 
         // Application State
         let currentResults = [];
-        // ADDED: New filter states
         let currentFilters = {
             price: null,
             category: null,
@@ -1734,7 +1683,6 @@
 
             showLoading(true);
             
-            // Simulate search delay for UX
             setTimeout(() => {
                 const results = searchProducts(query);
                 displaySearchResults(results, query);
@@ -1742,11 +1690,7 @@
                 
                 if (results.length > 0) {
                     showToast(`Found ${results.length} products`, 'success');
-                    // Smooth scroll to results
-                    document.getElementById('searchResults').scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
+                    document.getElementById('searchResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
                     showToast('No products found. Try different keywords.', 'error');
                 }
@@ -1758,10 +1702,7 @@
             console.log(`Searching for: "${searchTerm}"`);
             
             const results = ENHANCED_PRODUCT_DATABASE.filter(product => {
-                const keywordMatch = product.keywords.some(keyword => 
-                    keyword.toLowerCase().includes(searchTerm) || 
-                    searchTerm.includes(keyword.toLowerCase())
-                );
+                const keywordMatch = product.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm) || searchTerm.includes(keyword.toLowerCase()));
                 const nameMatch = product.name.toLowerCase().includes(searchTerm);
                 const brandMatch = product.brand.toLowerCase().includes(searchTerm);
                 const categoryMatch = product.category.toLowerCase().includes(searchTerm);
@@ -1769,18 +1710,11 @@
                 return keywordMatch || nameMatch || brandMatch || categoryMatch || descriptionMatch;
             });
 
-            // Sort by relevance score
-            results.sort((a, b) => {
-                const aScore = calculateRelevanceScore(a, searchTerm);
-                const bScore = calculateRelevanceScore(b, searchTerm);
-                return bScore - aScore;
-            });
-
-            console.log(`Found ${results.length} results for "${searchTerm}"`);
+            results.sort((a, b) => calculateRelevanceScore(b, searchTerm) - calculateRelevanceScore(a, searchTerm));
             return results;
         }
 
-        // MODIFIED: Added relevance scoring for scenarios and features
+        // MODIFIED: Enhanced relevance scoring with trust, popularity, and context
         function calculateRelevanceScore(product, searchTerm) {
             let score = 0;
             if (product.name.toLowerCase().includes(searchTerm)) score += 20;
@@ -1791,45 +1725,45 @@
             });
             if (product.brand.toLowerCase().includes(searchTerm)) score += 12;
             if (product.category.toLowerCase().includes(searchTerm)) score += 8;
-            score += product.confidence * 0.1;
             
-            // Add points for scenario and feature matches
-            if (currentFilters.scenario && product.scenarios && product.scenarios.includes(currentFilters.scenario)) {
-                score += 15;
+            if (currentFilters.scenario && product.scenarios?.includes(currentFilters.scenario)) {
+                score += 12;
             }
             if (currentFilters.features.length > 0 && product.features) {
                 const featureMatches = product.features.filter(f => currentFilters.features.includes(f));
-                score += featureMatches.length * 10;
+                score += featureMatches.length * 6;
             }
+
+            if (product.popularity) {
+                score += product.popularity * 0.1;
+            }
+
+            let trustValue = product.confidence;
+            if (product.trust) {
+                let comp = (0.4 * product.trust.marketplace) + (0.3 * product.trust.video) + (0.3 * product.trust.community);
+                if (product.trust.recency <= 14) comp += 5;
+                else if (product.trust.recency <= 30) comp += 3;
+                trustValue = Math.min(100, comp);
+            }
+            score += trustValue * 0.12;
 
             return score;
         }
 
         function displaySearchResults(results, query) {
             const searchResultsContainer = document.getElementById('searchResults');
+            const productsGridWrapper = document.getElementById('productsGridWrapper');
             const resultsCount = document.getElementById('resultsCount');
-            const productsGrid = document.getElementById('productsGrid');
             
             currentResults = results;
-            
             resultsCount.textContent = `${results.length} products found for "${query}"`;
             
             if (results.length === 0) {
-                productsGrid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🤔</div>
-                        <h3>No products found</h3>
-                        <p>Try different keywords or create a poll to ask the community!</p>
-                        <button class="primary-btn" onclick="createQuickPoll()" style="margin-top: 16px; width: auto; padding: 12px 24px;">
-                            📊 Ask Community
-                        </button>
-                    </div>
-                `;
+                productsGridWrapper.innerHTML = `<div class="products-grid"><div class="empty-state"><div class="empty-icon">🤔</div><h3>No products found</h3><p>Try different keywords or create a poll to ask the community!</p><button class="primary-btn" onclick="createQuickPoll()" style="margin-top: 16px; width: auto; padding: 12px 24px;">📊 Ask Community</button></div></div>`;
             } else {
                 displayFilteredResults(results);
             }
             
-            // Show results with animation and expand filters
             searchResultsContainer.classList.add('show');
             document.getElementById('filtersSection').classList.add('expanded');
         }
@@ -1839,7 +1773,6 @@
             performSmartSearch();
         }
 
-        // [ENHANCED] Filter Functions
         function setupFilters() {
             document.querySelector('.filters-header').addEventListener('click', function() {
                 this.parentElement.classList.toggle('expanded');
@@ -1850,13 +1783,11 @@
                     const filterType = this.dataset.filter;
                     const filterValue = this.dataset.value;
                     
-                    // MODIFIED: Handle multi-select for features
                     if (filterType === 'features') {
-                        if (this.classList.contains('active')) {
-                            this.classList.remove('active');
+                        this.classList.toggle('active');
+                        if (currentFilters.features.includes(filterValue)) {
                             currentFilters.features = currentFilters.features.filter(f => f !== filterValue);
                         } else {
-                            this.classList.add('active');
                             currentFilters.features.push(filterValue);
                         }
                     } else {
@@ -1869,7 +1800,6 @@
                             currentFilters[filterType] = filterValue;
                         }
                     }
-                    
                     applyFilters();
                 });
             });
@@ -1878,8 +1808,7 @@
                 sortResults(this.value);
             });
         }
-
-        // MODIFIED: Added logic for scenario and feature filtering
+        
         function applyFilters() {
             let filtered = [...currentResults];
             
@@ -1903,7 +1832,7 @@
                 filtered = filtered.filter(product => product.skinType === currentFilters.skintype || !product.skinType);
             }
             if (currentFilters.scenario) {
-                filtered = filtered.filter(product => product.scenarios && product.scenarios.includes(currentFilters.scenario));
+                filtered = filtered.filter(product => product.scenarios?.includes(currentFilters.scenario));
             }
             if (currentFilters.features.length > 0) {
                 filtered = filtered.filter(product => {
@@ -1914,32 +1843,21 @@
             displayFilteredResults(filtered);
         }
 
-        // [ENHANCED] Card Rendering Function with New Button Design
-        function displayFilteredResults(results) {
-            const resultsCount = document.getElementById('resultsCount');
-            const productsGrid = document.getElementById('productsGrid');
-            
-            resultsCount.textContent = `${results.length} products found`;
-            
-            if (results.length === 0) {
-                productsGrid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🔍</div>
-                        <h3>No products match your filters</h3>
-                        <p>Try adjusting your filters or clearing them to see more results.</p>
-                        <button class="primary-btn" onclick="clearAllFilters(event)" style="margin-top: 16px; width: auto; padding: 12px 24px;">
-                            Clear Filters
-                        </button>
-                    </div>
-                `;
-                return;
+        // ADDED: Helper to render a single product card
+        function renderProductCard(product) {
+            let trustValue = product.confidence;
+            if (product.trust) {
+                let comp = (0.4 * product.trust.marketplace) + (0.3 * product.trust.video) + (0.3 * product.trust.community);
+                if (product.trust.recency <= 14) comp += 5;
+                else if (product.trust.recency <= 30) comp += 3;
+                trustValue = Math.min(100, Math.round(comp));
             }
-            
-            productsGrid.innerHTML = results.map(product => `
+
+            return `
                 <div class="product-card" onclick="viewProduct(${product.id})">
                     <div class="product-image-placeholder">
                         ${product.image || '🛍️'}
-                        <div class="confidence-badge">${product.confidence}% Match</div>
+                        <div class="confidence-badge">${trustValue}% Trust</div>
                     </div>
                     <div class="product-content">
                         <div class="product-header">
@@ -1948,10 +1866,16 @@
                         
                         <h3 class="product-name">${product.name}</h3>
                         
+                        <div class="trust-breakdown">
+                            <span title="Marketplace Trust">📦 ${product.trust?.marketplace || '-'}%</span>
+                            <span title="Video Trust">📺 ${product.trust?.video || '-'}%</span>
+                            <span title="Community Trust">💬 ${product.trust?.community || '-'}%</span>
+                        </div>
+
                         <div class="vibe-tags">
                             <span class="vibe-tag highlight">${product.vibe}</span>
                             ${product.skinType ? `<span class="vibe-tag">For ${product.skinType} skin</span>` : ''}
-                            <span class="vibe-tag">${product.category}</span>
+                            <span class="vibe-tag">${product.confidence}% Match</span>
                         </div>
 
                         <div class="product-price">
@@ -1963,24 +1887,48 @@
                         <div class="product-actions">
                             <div class="primary-action">
                                 <button class="primary-btn" onclick="quickBuy(${product.id}); event.stopPropagation();">
-                                    <span class="btn-icon">🛒</span>
-                                    Quick Buy
+                                    <span class="btn-icon">🛒</span> Quick Buy
                                 </button>
                             </div>
                             <div class="secondary-actions">
                                 <button class="secondary-btn" onclick="askCommunity('${product.name}', ${product.price}); event.stopPropagation();">
-                                    <span class="btn-icon">💬</span>
-                                    Ask Community
+                                    <span class="btn-icon">💬</span> Ask
                                 </button>
                                 <button class="secondary-btn" onclick="shareProduct(${product.id}); event.stopPropagation();">
-                                    <span class="btn-icon">📤</span>
-                                    Share
+                                    <span class="btn-icon">📤</span> Share
+                                </button>
+                                <button class="secondary-btn" onclick="showWhyThis(${product.id}); event.stopPropagation();">
+                                    <span class="btn-icon">❓</span> Why This?
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-            `).join('');
+            `;
+        }
+
+        // MODIFIED: Display logic with recommended strip
+        function displayFilteredResults(results) {
+            const productsGridWrapper = document.getElementById('productsGridWrapper');
+            document.getElementById('resultsCount').textContent = `${results.length} products found`;
+            
+            if (results.length === 0) {
+                productsGridWrapper.innerHTML = `<div class="products-grid"><div class="empty-state">...</div></div>`;
+                return;
+            }
+            
+            let recommendedHTML = '';
+            if (results.length > 3 && !currentFilters.price && !currentFilters.confidence && !currentFilters.skintype) {
+                const top3 = [...results].slice(0, 3);
+                recommendedHTML = `
+                    <div class="recommended-strip">
+                        <h3>✨ Recommended for You</h3>
+                        <div class="products-grid">${top3.map(renderProductCard).join('')}</div>
+                    </div>`;
+            }
+
+            const mainGridHTML = `<div class="products-grid">${results.map(renderProductCard).join('')}</div>`;
+            productsGridWrapper.innerHTML = recommendedHTML + mainGridHTML;
         }
 
         function sortResults(sortBy) {
@@ -1992,13 +1940,12 @@
                 case 'rating': sorted.sort((a, b) => b.confidence - a.confidence); break;
                 case 'confidence': sorted.sort((a, b) => b.confidence - a.confidence); break;
                 default: 
-                    // Re-sort by relevance if 'Best Match' is selected
                     const query = document.getElementById('mainSearchInput').value.trim();
                     sorted.sort((a, b) => calculateRelevanceScore(b, query) - calculateRelevanceScore(a, query));
                     break;
             }
             
-            // We apply filters after sorting to maintain the current view
+            currentResults = sorted; // Update currentResults with the sorted list
             applyFilters();
         }
 
@@ -2006,7 +1953,24 @@
             if (event) event.stopPropagation();
             currentFilters = { price: null, category: null, confidence: null, skintype: null, scenario: null, features: [] };
             document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
-            sortResults('relevance');
+            // After clearing, re-run the search to get the original ranked list
+            performSmartSearch();
+        }
+        
+        // ADDED: "Why this choice?" transparency function
+        function showWhyThis(productId) {
+            const p = ENHANCED_PRODUCT_DATABASE.find(x => x.id === productId);
+            if (!p) return;
+
+            const breakdown = `
+                <b>Why we recommended ${p.name}:</b>
+                Trust Score: ${p.trust?.marketplace || '-'}% (Marketplace), ${p.trust?.video || '-'}% (Video), ${p.trust?.community || '-'}% (Community)<br>
+                Recency: ${p.trust?.recency || '-'} days ago<br>
+                Popularity Score: ${p.popularity || '-'}/100<br>
+                Matched Features: ${(p.features || []).join(', ') || 'None'}<br>
+                Matched Scenario: ${currentFilters.scenario || 'General'}
+            `;
+            showToast(breakdown, 'info');
         }
 
         // Voice Search Implementation
@@ -2236,7 +2200,6 @@
                     url: window.location.href
                 });
             } else {
-                // Fallback for browsers without native sharing
                 navigator.clipboard.writeText(`Check out ${product.name} - ₹${product.price.toLocaleString()}`);
                 showToast('✅ Product link copied to clipboard!', 'success');
             }
@@ -2260,13 +2223,7 @@
         }
 
         function getPlatformIcon(platform) {
-            const icons = {
-                'Instagram': '📷',
-                'YouTube': '📺',
-                'Twitter': '🐦',
-                'WhatsApp': '💬',
-                'TikTok': '🎵'
-            };
+            const icons = { 'Instagram': '📷', 'YouTube': '📺', 'Twitter': '🐦', 'WhatsApp': '💬', 'TikTok': '🎵' };
             return icons[platform] || '🌐';
         }
 
@@ -2277,9 +2234,9 @@
         function showToast(message, type = 'info') {
             const toast = document.createElement('div');
             toast.className = `status-message status-${type}`;
-            toast.textContent = message;
+            toast.innerHTML = message; // Use innerHTML to render line breaks
             document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+            setTimeout(() => toast.remove(), 5000); // Increased duration for readability
         }
 
         // Screen Management
@@ -2288,13 +2245,7 @@
             document.getElementById(screenId).classList.add('active');
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            const btnId = { 
-                homeScreen: 'homeBtn', 
-                trendsScreen: 'trendsBtn', 
-                pollsScreen: 'pollsBtn', 
-                groupsScreen: 'groupsBtn' 
-            }[screenId];
-            
+            const btnId = { homeScreen: 'homeBtn', trendsScreen: 'trendsBtn', pollsScreen: 'pollsBtn', groupsScreen: 'groupsBtn' }[screenId];
             if(btnId) document.getElementById(btnId).classList.add('active');
             
             if (screenId === 'pollsScreen') loadRecentPolls();
@@ -2303,16 +2254,12 @@
 
         // Initialize Application
         function initializeApp() {
-            document.getElementById('mainSearchInput').addEventListener('keypress', e => { 
-                if (e.key === 'Enter') performSmartSearch(); 
-            });
-            
+            document.getElementById('mainSearchInput').addEventListener('keypress', e => { if (e.key === 'Enter') performSmartSearch(); });
             document.getElementById('homeBtn').addEventListener('click', () => showScreen('homeScreen'));
             document.getElementById('trendsBtn').addEventListener('click', () => showScreen('trendsScreen'));
             document.getElementById('pollsBtn').addEventListener('click', () => showScreen('pollsScreen'));
             document.getElementById('groupsBtn').addEventListener('click', () => showScreen('groupsScreen'));
             
-            // Initialize platform tabs
             document.querySelectorAll('.platform-tab').forEach(tab => {
                 tab.addEventListener('click', function() {
                     const parent = this.parentElement;
@@ -2325,11 +2272,10 @@
             setupVoiceSearch();
             setupFilters();
             
-            console.log('🚀 QwikPik Enhanced - All Features Loaded Successfully!');
+            console.log('🚀 QwikPik AI Engine Enhanced - All Features Loaded Successfully!');
         }
 
         document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
 </body>
 </html>
-
