@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1095,310 +1096,272 @@
             background: var(--color-border);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .search-box {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .nav-actions {
-                gap: 4px;
-            }
-            
-            .nav-btn {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-
-            .results-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .filters-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            /* MODIFIED: Change to 1 column on mobile */
-            .secondary-actions {
-                grid-template-columns: 1fr;
-            }
-     /* FIXED: Recruiter Pop-up Modal Styles */
+        /* FIXED: Enhanced Mobile-First Modal System */
 .recruiter-modal {
     display: none !important;
     position: fixed !important;
-    z-index: 10000 !important;
+    z-index: 999999 !important;
     left: 0 !important;
     top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important; /* Dynamic viewport height for mobile */
+    background-color: rgba(0, 0, 0, 0.8) !important;
     animation: fadeIn 0.3s ease-in-out;
+    -webkit-overflow-scrolling: touch !important; /* Smooth scrolling on iOS */
+    overflow-y: auto !important;
 }
 
 .recruiter-modal.show {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    padding: 20px !important;
 }
 
 .modal-content {
     background-color: #ffffff !important;
-    padding: 30px !important;
-    border-radius: 12px !important;
-    width: 90% !important;
-    max-width: 500px !important;
-    max-height: 90vh !important;
+    padding: 25px !important;
+    border-radius: 16px !important;
+    width: 95% !important;
+    max-width: 450px !important;
+    max-height: 85vh !important;
+    max-height: 85dvh !important; /* Dynamic viewport height */
     overflow-y: auto !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
     position: relative !important;
     margin: auto !important;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     z-index: 999999 !important;
+    -webkit-overflow-scrolling: touch !important;
 }
 
-/* Fix for all modal content elements */
-.modal-content * {
-    color: inherit !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
 
-.modal-title {
-    color: #333333 !important;
-    margin-bottom: 20px !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
-    display: block !important;
-    visibility: visible !important;
-}
-
-.form-group {
-    margin-bottom: 20px !important;
-    display: block !important;
-    visibility: visible !important;
-}
-
-.form-group label {
-    display: block !important;
-    margin-bottom: 5px !important;
-    font-weight: 500 !important;
-    color: #555555 !important;
-    visibility: visible !important;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100% !important;
-    padding: 12px !important;
-    border: 2px solid #e1e5e9 !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    transition: border-color 0.3s ease !important;
-    box-sizing: border-box !important;
-    background-color: #ffffff !important;
-    color: #333333 !important;
-    display: block !important;
-    visibility: visible !important;
-}
-
-.submit-btn {
-    background-color: #007bff !important;
-    color: white !important;
-    padding: 12px 24px !important;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    width: 100% !important;
-    transition: background-color 0.3s ease !important;
-    display: block !important;
-    visibility: visible !important;
-}
-
-.close-btn {
-    color: #aaa !important;
-    float: right !important;
-    font-size: 28px !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
-    position: absolute !important;
-    right: 15px !important;
-    top: 15px !important;
-}
-
-.close-btn:hover {
-    color: #000 !important;
-}
-
-.modal-title {
-    color: #333 !important;
-    margin-bottom: 20px !important;
-    font-size: 24px !important;
-    font-weight: 600 !important;
-}
-
-.form-group {
-    margin-bottom: 20px !important;
-}
-
-.form-group label {
-    display: block !important;
-    margin-bottom: 5px !important;
-    font-weight: 500 !important;
-    color: #555 !important;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100% !important;
-    padding: 12px !important;
-    border: 2px solid #e1e5e9 !important;
-    border-radius: 8px !important;
-    font-size: 14px !important;
-    transition: border-color 0.3s ease !important;
-    box-sizing: border-box !important;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-    outline: none !important;
-    border-color: #007bff !important;
-}
-
-.submit-btn {
-    background-color: #007bff !important;
-    color: white !important;
-    padding: 12px 24px !important;
-    border: none !important;
-    border-radius: 8px !important;
-    cursor: pointer !important;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    width: 100% !important;
-    transition: background-color 0.3s ease !important;
-}
-
-.submit-btn:hover {
-    background-color: #0056b3 !important;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from { transform: translateY(-50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-/* EMERGENCY FIX for Desktop Modal Issues */
-@media (min-width: 769px) {
-    .recruiter-modal {
-        display: none !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        z-index: 999999 !important;
-        margin: 0 !important;
-        padding: 0 !important;
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 1.8rem !important;
+        margin-bottom: 12px !important;
+        line-height: 1.2 !important;
     }
     
-    .recruiter-modal.show {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
+    .hero-subtitle {
+        font-size: 1rem !important;
+        margin-bottom: 20px !important;
     }
     
+    .search-box {
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+    
+    .search-input {
+        width: 100% !important;
+        font-size: 16px !important; /* Prevent zoom on iOS */
+    }
+    
+    .nav-actions {
+        gap: 6px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .nav-btn {
+        font-size: 11px !important;
+        padding: 8px 12px !important;
+        white-space: nowrap !important;
+    }
+
+    .results-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+
+    .filters-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    
+    .secondary-actions {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+    
+    .product-card {
+        margin-bottom: 16px !important;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+        padding: 16px !important;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    
+    .trending-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+    
+    .group-categories {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    
+    .poll-types {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    
+    .search-platforms {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    
+    /* Enhanced mobile container padding */
+    .container {
+        padding: 0 12px !important;
+    }
+    
+    /* Better mobile typography */
+    .feature-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .feature-subtitle {
+        font-size: 1rem !important;
+    }
+    
+    /* Mobile modal improvements */
     .modal-content {
-        position: relative !important;
-        margin: auto !important;
-        max-width: 500px !important;
-        width: 90% !important;
+        width: 92% !important;
+        padding: 20px !important;
+        margin: 10px !important;
+        border-radius: 12px !important;
+    }
+    
+    .modal-title {
+        font-size: 20px !important;
+        margin-bottom: 16px !important;
+    }
+    
+    .close-btn {
+        font-size: 24px !important;
+        right: 12px !important;
+        top: 12px !important;
+        padding: 8px !important;
+    }
+    
+    /* FAB mobile optimization */
+    #recruiterFab {
+        bottom: 20px !important;
+        right: 20px !important;
+        padding: 14px 16px !important;
+        font-size: 12px !important;
+        border-radius: 25px !important;
+        min-height: 44px !important; /* Apple's recommended minimum touch target */
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Status message mobile positioning */
+    .status-message {
+        top: 70px !important;
+        right: 12px !important;
+        left: 12px !important;
+        width: auto !important;
+        max-width: none !important;
+        font-size: 13px !important;
     }
 }
 
-   }
-
-@keyframes bounceAndPulse {
-    0%, 100% { 
-        transform: scale(1) translateY(0);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+/* Extra small screens */
+@media (max-width: 480px) {
+    .brand-title {
+        font-size: 22px !important;
     }
-    25% { 
-        transform: scale(1.05) translateY(-3px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    
+    .nav-btn {
+        font-size: 10px !important;
+        padding: 6px 8px !important;
+    }
+    
+    .hero-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .filter-chip {
+        font-size: 11px !important;
+        padding: 6px 10px !important;
+    }
+    
+    .product-name {
+        font-size: 16px !important;
+    }
+    
+    .product-price {
+        font-size: 20px !important;
+    }
+}
+
+
+/* FINAL WORKING FAB */
+#recruiterFab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    font-weight: 600;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    z-index: 999999;
+    transition: all 0.3s ease;
+    min-height: 44px;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: simplePulse 2s ease-in-out infinite;
+}
+
+#recruiterFab:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+@keyframes simplePulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.9;
     }
     50% { 
-        transform: scale(1.08) translateY(0);
-        box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
-    }
-    75% { 
-        transform: scale(1.05) translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-}
-
-/* More Prominent Shimmer Effect */
-#recruiterFab {
-    position: relative;
-    overflow: hidden;
-    animation: bounceAndPulse 3s ease-in-out infinite !important;
-}
-
-#recruiterFab::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -150%;
-    width: 150%;
-    height: 100%;
-    background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(255, 255, 255, 0.8) 50%,
-        transparent 70%
-    );
-    animation: shimmerSweepBold 4s infinite;
-    z-index: 1;
-}
-
-@keyframes shimmerSweepBold {
-    0% { 
-        left: -150%; 
-        opacity: 0;
-    }
-    25% {
+        transform: scale(1.02);
         opacity: 1;
     }
-    75% {
-        opacity: 1;
-    }
-    100% { 
-        left: 150%; 
-        opacity: 0;
-    }
 }
 
-/* Ensure button text stays visible */
-#recruiterFab * {
-    position: relative;
-    z-index: 2;
+@media (max-width: 768px) {
+    #recruiterFab {
+        bottom: 20px;
+        right: 20px;
+        padding: 12px 16px;
+        font-size: 12px;
+        min-width: 120px;
+    }
 }
-
 
     </style>
 </head>
@@ -2580,159 +2543,61 @@
 </div>
 
 <!-- Floating Action Button to Trigger Modal -->
-<div id="recruiterFab" style="
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 15px 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    font-weight: 500;
-    font-size: 14px;
-    z-index: 999;
-    transition: transform 0.3s ease;
-" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+<div id="recruiterFab">
     💼 Hire Me as PM?
-
 </div>
+
 <script>
-// FIXED: Recruiter Modal without Form Dependency
+// SIMPLE WORKING MODAL
 (function() {
-    'use strict';
-    
-    function initRecruiterModal() {
-        console.log('🔧 FIXED DEBUG: Initializing recruiter modal...');
+    function initModal() {
+        console.log('🚀 Initializing modal...');
         
         const modal = document.getElementById('recruiterModal');
         const fab = document.getElementById('recruiterFab');
         const closeBtn = document.querySelector('.close-btn');
 
-        console.log('🔧 Elements found:', {
-            modal: !!modal,
-            fab: !!fab,
-            closeBtn: !!closeBtn
-        });
-
         if (!modal || !fab || !closeBtn) {
-            console.error('❌ Missing essential elements');
+            console.error('❌ Missing elements');
             return;
         }
 
-        // Force initial hidden state
-        modal.style.display = 'none';
-
-        // FAB click handler
-        fab.onclick = function(e) {
+        // Simple click handler
+        fab.addEventListener('click', function(e) {
             e.preventDefault();
-            e.stopPropagation();
-            console.log('🔧 FAB clicked - opening modal...');
-            
-            try {
-                // Force modal display
-                modal.style.display = 'flex';
-                modal.style.justifyContent = 'center';
-                modal.style.alignItems = 'center';
-                modal.style.position = 'fixed';
-                modal.style.top = '0';
-                modal.style.left = '0';
-                modal.style.width = '100vw';
-                modal.style.height = '100vh';
-                modal.style.zIndex = '999999';
-                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-                
-                // Force modal content visibility
-                const modalContent = modal.querySelector('.modal-content');
-                modalContent.style.display = 'block';
-                modalContent.style.visibility = 'visible';
-                modalContent.style.opacity = '1';
-                modalContent.style.backgroundColor = '#ffffff';
-                modalContent.style.color = '#000000';
-                modalContent.style.padding = '30px';
-                modalContent.style.borderRadius = '12px';
-                modalContent.style.maxWidth = '500px';
-                modalContent.style.width = '90%';
-                modalContent.style.maxHeight = '90vh';
-                modalContent.style.overflowY = 'auto';
-                modalContent.style.position = 'relative';
-                modalContent.style.margin = 'auto';
-                modalContent.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
-                
-                // Force all child elements to be visible
-                const allElements = modalContent.querySelectorAll('*');
-                allElements.forEach(element => {
-                    element.style.visibility = 'visible';
-                    element.style.opacity = '1';
-                    element.style.color = '#000000';
-                    
-                    if (element.tagName === 'H2') {
-                        element.style.fontSize = '24px';
-                        element.style.marginBottom = '20px';
-                        element.style.fontWeight = '600';
-                    }
-                    
-                    if (element.tagName === 'A') {
-                        element.style.color = '#0077b5';
-                        element.style.textDecoration = 'none';
-                        element.style.fontWeight = '500';
-                    }
-                });
-                
-                // Force close button visibility
-                closeBtn.style.position = 'absolute';
-                closeBtn.style.right = '15px';
-                closeBtn.style.top = '15px';
-                closeBtn.style.fontSize = '28px';
-                closeBtn.style.color = '#aaa';
-                closeBtn.style.cursor = 'pointer';
-                closeBtn.style.fontWeight = 'bold';
-                closeBtn.style.visibility = 'visible';
-                closeBtn.style.opacity = '1';
-                closeBtn.style.zIndex = '999999';
-                
-                document.body.style.overflow = 'hidden';
-                
-                console.log('✅ Modal opened successfully');
-                
-            } catch (error) {
-                console.error('❌ Error showing modal:', error);
-            }
-        };
+            console.log('📱 Opening modal...');
+            modal.classList.add('show');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
 
-        // Close handlers
-        closeBtn.onclick = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('🔧 Close button clicked');
-            closeModal();
-        };
-
-        modal.onclick = function(e) {
-            if (e.target === modal) {
-                console.log('🔧 Outside click detected');
-                closeModal();
-            }
-        };
-
+        // Simple close handler
         function closeModal() {
-            console.log('🔧 Closing modal');
+            console.log('📱 Closing modal...');
+            modal.classList.remove('show');
             modal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
 
-        console.log('🎉 Modal initialized successfully - button should be clickable now!');
+        closeBtn.addEventListener('click', closeModal);
+        
+        // Close on backdrop click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+
+        console.log('✅ Modal ready!');
     }
 
-    // Initialize
+    // Initialize when ready
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initRecruiterModal);
+        document.addEventListener('DOMContentLoaded', initModal);
     } else {
-        setTimeout(initRecruiterModal, 100);
+        initModal();
     }
 })();
+
+
 </script>
 
 
