@@ -1385,6 +1385,72 @@
     }
 }
 
+/*--- Compact Platform Tiles for Social Search (Mobile) ---*/
+@media (max-width: 768px) {
+    .search-platforms {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-bottom: 20px !important;
+    }
+    .platform-search-card {
+        padding: 12px 8px !important;
+        text-align: center !important;
+        min-height: 100px !important;
+        border-radius: 10px !important;
+    }
+    .platform-icon {
+        font-size: 1.8rem !important;
+        margin-bottom: 6px !important;
+    }
+    .platform-name {
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        margin-bottom: 4px !important;
+        line-height: 1.2 !important;
+    }
+    .platform-desc {
+        font-size: 10px !important;
+        line-height: 1.2 !important;
+        color: var(--color-text-secondary) !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+}
+@media (max-width: 480px) {
+    .search-platforms {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px !important;
+    }
+    .platform-search-card {
+        padding: 10px 6px !important;
+        min-height: 85px !important;
+    }
+    .platform-icon {
+        font-size: 1.5rem !important;
+        margin-bottom: 4px !important;
+    }
+    .platform-name {
+        font-size: 11px !important;
+        margin-bottom: 3px !important;
+    }
+    .platform-desc {
+        font-size: 9px !important;
+        -webkit-line-clamp: 1 !important;
+    }
+}
+@media (max-width: 768px) {
+  .platform-search-card.active .platform-desc {
+    color: rgba(255,255,255,0.85) !important;
+  }
+}
+@media (max-width: 480px) {
+  .platform-search-card.active .platform-desc {
+    color: rgba(255,255,255,0.9) !important;
+  }
+}
+
 
     </style>
 </head>
@@ -1393,7 +1459,7 @@
         <!-- Enhanced Navigation -->
         <nav class="main-nav">
             <div class="nav-container">
-                <h1 class="brand-title">QwikPik</h1>
+               <h1 class="brand-title" id="brandTitle" style="cursor: pointer;">QwikPik</h1>
                 <div class="nav-actions">
                     <button class="nav-btn active" id="homeBtn">
                         <span>🏠</span> Home
@@ -2277,6 +2343,44 @@
             showToast('🔍 Opening Social Search...', 'info');
             showScreen('socialSearchScreen');
         }
+	
+function performSocialSearch() {
+    const query = document.getElementById('socialSearchInput').value.trim();
+    if (!query) {
+        showToast('Please enter a search term for social search', 'error');
+        return;
+    }
+    showToast(`🔍 Searching "${query}" across all social platforms...`, 'info');
+    setTimeout(() => {
+        const resultsContainer = document.getElementById('socialSearchResults');
+        const socialPlatforms = [
+            { name: 'Instagram', icon: '📷', mentions: Math.floor(Math.random() * 500 + 100) + 'K' },
+            { name: 'TikTok', icon: '🎵', mentions: Math.floor(Math.random() * 300 + 50) + 'K' },
+            { name: 'YouTube', icon: '📺', mentions: Math.floor(Math.random() * 200 + 30) + 'K' },
+            { name: 'Twitter', icon: '🐦', mentions: Math.floor(Math.random() * 150 + 20) + 'K' }
+        ];
+        resultsContainer.innerHTML = `
+            <div class="feature-screen">
+                <h3>🌐 Search Results for "${query}"</h3>
+                <div class="trending-grid">
+                    ${socialPlatforms.map(platform => `
+                        <div class="trending-card">
+                            <div class="trending-name">${query} on ${platform.name}</div>
+                            <div class="platform-badge">${platform.icon} ${platform.name}</div>
+                            <div class="trending-stats">
+                                <span class="trending-mentions">${platform.mentions} mentions</span>
+                                <span style="color: var(--color-primary);">#trending</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>`;
+        setTimeout(() => {
+            resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+        showToast(`✅ Found trending content for "${query}" across all platforms!`, 'success');
+    }, 1000);
+}
 
       function searchPlatform(platform) {
     document.querySelectorAll('.platform-search-card').forEach(card => card.classList.remove('active'));
@@ -2509,28 +2613,35 @@
 
         // Initialize Application
         function initializeApp() {
-            document.getElementById('mainSearchInput').addEventListener('keypress', e => { if (e.key === 'Enter') performSmartSearch(); });
-            document.getElementById('homeBtn').addEventListener('click', () => showScreen('homeScreen'));
-            document.getElementById('trendsBtn').addEventListener('click', () => showScreen('trendsScreen'));
-            document.getElementById('pollsBtn').addEventListener('click', () => showScreen('pollsScreen'));
-            document.getElementById('groupsBtn').addEventListener('click', () => showScreen('groupsScreen'));
-            
-            document.querySelectorAll('.platform-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const parent = this.parentElement;
-                    parent.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            renderTrendingProducts();
-            setupVoiceSearch();
-            setupFilters();
-            
-            console.log('🚀 QwikPik AI Engine Enhanced - All Features Loaded Successfully!');
-        }
 
-        document.addEventListener('DOMContentLoaded', initializeApp);
+    document.getElementById('mainSearchInput').addEventListener('keypress', e => { if (e.key === 'Enter') performSmartSearch(); });
+    document.getElementById('brandTitle').addEventListener('click', () => showScreen('homeScreen'));
+    document.getElementById('mainSearchInput').addEventListener('keypress', e => { if (e.key === 'Enter') performSmartSearch(); });
+    document.getElementById('homeBtn').addEventListener('click', () => showScreen('homeScreen'));
+    document.getElementById('trendsBtn').addEventListener('click', () => showScreen('trendsScreen'));
+    document.getElementById('pollsBtn').addEventListener('click', () => showScreen('pollsScreen'));
+    document.getElementById('groupsBtn').addEventListener('click', () => showScreen('groupsScreen'));
+    
+    document.getElementById('socialSearchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') performSocialSearch();
+    });
+        
+    document.querySelectorAll('.platform-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const parent = this.parentElement;
+            parent.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+    
+    renderTrendingProducts();
+    setupVoiceSearch();
+    setupFilters();
+    
+    console.log('🚀 QwikPik AI Engine Enhanced - All Features Loaded Successfully!');
+}
+document.addEventListener('DOMContentLoaded', initializeApp);
+
 </script>
 
 
