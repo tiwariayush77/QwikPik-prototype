@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1335,6 +1334,24 @@
     align-items: center;
     justify-content: center;
     animation: simplePulse 2s ease-in-out infinite;
+    overflow: hidden;               /* Required for shimmer */
+}
+
+#recruiterFab::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: -75%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      120deg, 
+      rgba(255,255,255, 0) 30%, 
+      rgba(255,255,255, 0.4) 50%, 
+      rgba(255,255,255, 0) 70%
+    );
+    animation: shimmerMove 1.6s infinite linear;
+    pointer-events: none;
 }
 
 #recruiterFab:hover {
@@ -1353,6 +1370,11 @@
     }
 }
 
+@keyframes shimmerMove {
+    0% { left: -75%; }
+    100% { left: 100%; }
+}
+
 @media (max-width: 768px) {
     #recruiterFab {
         bottom: 20px;
@@ -1362,6 +1384,7 @@
         min-width: 120px;
     }
 }
+
 
     </style>
 </head>
