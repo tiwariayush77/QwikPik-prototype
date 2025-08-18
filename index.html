@@ -2255,37 +2255,35 @@
             showScreen('socialSearchScreen');
         }
 
-        function searchPlatform(platform) {
-            document.querySelectorAll('.platform-search-card').forEach(card => card.classList.remove('active'));
-            event.target.closest('.platform-search-card').classList.add('active');
-            
-            const platformData = {
-                'instagram': { name: 'Instagram', icon: '📷', results: ['Viral skincare hauls', 'Influencer fashion finds', 'Beauty product reviews'] },
-                'tiktok': { name: 'TikTok', icon: '🎵', results: ['Trending tech gadgets', 'Viral home hacks', 'Budget beauty finds'] },
-                'youtube': { name: 'YouTube', icon: '📺', results: ['Product unboxing videos', 'Detailed reviews', 'Tutorial recommendations'] },
-                'twitter': { name: 'X/Twitter', icon: '🐦', results: ['Real-time product buzz', 'Deal alerts', 'Community discussions'] }
-            };
-            const data = platformData[platform];
-            showToast(`🔍 Searching ${data.name} for trending products...`, 'info');
-            
-            setTimeout(() => {
-                const resultsContainer = document.getElementById('socialSearchResults');
-                resultsContainer.innerHTML = `<div class="feature-screen"><h3>${data.icon} ${data.name} Search Results</h3><div class="trending-grid">${data.results.map(result => `<div class="trending-card"><div class="trending-name">${result}</div><div class="platform-badge">${data.icon} ${data.name}</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random() * 50 + 10)}K mentions</span><span style="color: var(--color-primary);">#trending</span></div></div>`).join('')}</div></div>`;
-                showToast(`Found trending content on ${data.name}!`, 'success');
-            }, 1000);
-        }
+      function searchPlatform(platform) {
+    document.querySelectorAll('.platform-search-card').forEach(card => card.classList.remove('active'));
+    event.target.closest('.platform-search-card').classList.add('active');
+    
+    const platformData = {
+        'instagram': { name: 'Instagram', icon: '📷', results: ['Viral skincare hauls', 'Influencer fashion finds', 'Beauty product reviews'] },
+        'tiktok': { name: 'TikTok', icon: '🎵', results: ['Trending tech gadgets', 'Viral home hacks', 'Budget beauty finds'] },
+        'youtube': { name: 'YouTube', icon: '📺', results: ['Product unboxing videos', 'Detailed reviews', 'Tutorial recommendations'] },
+        'twitter': { name: 'X/Twitter', icon: '🐦', results: ['Real-time product buzz', 'Deal alerts', 'Community discussions'] }
+    };
+    const data = platformData[platform];
+    showToast(`🔍 Searching ${data.name} for trending products...`, 'info');
+    
+    setTimeout(() => {
+        const resultsContainer = document.getElementById('socialSearchResults');
+        resultsContainer.innerHTML = `<div class="feature-screen"><h3>${data.icon} ${data.name} Search Results</h3><div class="trending-grid">${data.results.map(result => `<div class="trending-card"><div class="trending-name">${result}</div><div class="platform-badge">${data.icon} ${data.name}</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random() * 50 + 10)}K mentions</span><span style="color: var(--color-primary);">#trending</span></div></div>`).join('')}</div></div>`;
+        
+        // ADDED: Auto-scroll to results on mobile
+        setTimeout(() => {
+            resultsContainer.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 100);
+        
+        showToast(`Found trending content on ${data.name}!`, 'success');
+    }, 1000);
+}
 
-        function performSocialSearch() {
-            const query = document.getElementById('socialSearchInput').value.trim();
-            if (!query) { showToast('Please enter a search term', 'error'); return; }
-            showToast(`🌐 Searching "${query}" across all social platforms...`, 'info');
-            
-            setTimeout(() => {
-                const resultsContainer = document.getElementById('socialSearchResults');
-                resultsContainer.innerHTML = `<div class="feature-screen"><h3>🔍 Social Search Results for "${query}"</h3><div class="platform-tabs"><button class="platform-tab active">All</button><button class="platform-tab">📷</button><button class="platform-tab">🎵</button><button class="platform-tab">📺</button></div><div class="trending-grid"><div class="trending-card"><div class="trending-name">Viral ${query} recommendations</div><div class="platform-badge">📷 Instagram</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random()*100+20)}K mentions</span></div></div><div class="trending-card"><div class="trending-name">${query} honest reviews</div><div class="platform-badge">📺 YouTube</div><div class="trending-stats"><span class="trending-mentions">${Math.floor(Math.random()*80+15)}K mentions</span></div></div></div></div>`;
-                showToast(`✨ Found social insights for "${query}"!`, 'success');
-            }, 1500);
-        }
 
         // Polls Feature
         function createQuickPoll() {
